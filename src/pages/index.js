@@ -136,7 +136,7 @@ export default function Home() {
               <span className="sr-only">Your Company</span>
               <img
                 className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                src="https://tailwindui.com/img/logos/mark.svg?color=teal&shade=600"
                 alt=""
               />
             </a>
@@ -172,7 +172,7 @@ export default function Home() {
                 <span className="sr-only">Your Company</span>
                 <img
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                  src="https://tailwindui.com/img/logos/mark.svg?color=teal&shade=600"
                   alt=""
                 />
               </a>
@@ -220,7 +220,7 @@ export default function Home() {
             aria-hidden="true"
           >
             <div
-              className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+              className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#a5f3fc] to-[#14b8a6] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
               style={{
                 clipPath:
                   'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
@@ -240,7 +240,7 @@ export default function Home() {
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <a
                     href="#"
-                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="rounded-md bg-teal-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                   >
                     Get started
                   </a>
@@ -267,7 +267,7 @@ export default function Home() {
             aria-hidden="true"
           >
             <div
-              className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+              className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#a5f3fc] to-[#14b8a6] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
               style={{
                 clipPath:
                   'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
@@ -320,7 +320,7 @@ export default function Home() {
               <span className="hidden md:inline">
                 Transistor saves up to $40,000 per year, per employee by working with us.
               </span>
-              <a href="#" className="font-semibold text-indigo-600">
+              <a href="#" className="font-semibold text-teal-600">
                 <span className="absolute inset-0" aria-hidden="true" /> Read our case study{' '}
                 <span aria-hidden="true">&rarr;</span>
               </a>
@@ -331,7 +331,7 @@ export default function Home() {
         {/* Feature section */}
         <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-indigo-600">Deploy faster</h2>
+            <h2 className="text-base font-semibold leading-7 text-teal-600">Deploy faster</h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               Everything you need to deploy your app
             </p>
@@ -345,7 +345,7 @@ export default function Home() {
               {features.map((feature) => (
                 <div key={feature.name} className="relative pl-16">
                   <dt className="text-base font-semibold leading-7 text-gray-900">
-                    <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                    <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600">
                       <feature.icon className="h-6 w-6 text-white" aria-hidden="true" />
                     </div>
                     {feature.name}
@@ -410,7 +410,7 @@ export default function Home() {
         <div className="py-24 sm:pt-48">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-4xl text-center">
-              <h2 className="text-base font-semibold leading-7 text-indigo-600">Pricing</h2>
+              <h2 className="text-base font-semibold leading-7 text-teal-600">Pricing</h2>
               <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
                 Pricing plans for teams of&nbsp;all&nbsp;sizes
               </p>
@@ -435,14 +435,14 @@ export default function Home() {
                       <h3
                         id={tier.id}
                         className={classNames(
-                          tier.mostPopular ? 'text-indigo-600' : 'text-gray-900',
+                          tier.mostPopular ? 'text-teal-600' : 'text-gray-900',
                           'text-lg font-semibold leading-8'
                         )}
                       >
                         {tier.name}
                       </h3>
                       {tier.mostPopular ? (
-                        <p className="rounded-full bg-indigo-600/10 px-2.5 py-1 text-xs font-semibold leading-5 text-indigo-600">
+                        <p className="rounded-full bg-teal-600/10 px-2.5 py-1 text-xs font-semibold leading-5 text-teal-600">
                           Most popular
                         </p>
                       ) : null}
@@ -455,7 +455,7 @@ export default function Home() {
                     <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600">
                       {tier.features.map((feature) => (
                         <li key={feature} className="flex gap-x-3">
-                          <CheckIcon className="h-6 w-5 flex-none text-indigo-600" aria-hidden="true" />
+                          <CheckIcon className="h-6 w-5 flex-none text-teal-600" aria-hidden="true" />
                           {feature}
                         </li>
                       ))}
@@ -466,9 +466,9 @@ export default function Home() {
                     aria-describedby={tier.id}
                     className={classNames(
                       tier.mostPopular
-                        ? 'bg-indigo-600 text-white shadow-sm hover:bg-indigo-500'
-                        : 'text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300',
-                      'mt-8 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                        ? 'bg-teal-600 text-white shadow-sm hover:bg-teal-500'
+                        : 'text-teal-600 ring-1 ring-inset ring-teal-200 hover:ring-teal-300',
+                      'mt-8 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
                     )}
                   >
                     Buy plan
@@ -501,7 +501,7 @@ export default function Home() {
             aria-hidden="true"
           >
             <div
-              className="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-25"
+              className="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#a5f3fc] to-[#14b8a6] opacity-25"
               style={{
                 clipPath:
                   'polygon(73.6% 48.6%, 91.7% 88.5%, 100% 53.9%, 97.4% 18.1%, 92.5% 15.4%, 75.7% 36.3%, 55.3% 52.8%, 46.5% 50.9%, 45% 37.4%, 50.3% 13.1%, 21.3% 36.2%, 0.1% 0.1%, 5.4% 49.1%, 21.4% 36.4%, 58.9% 100%, 73.6% 48.6%)',
@@ -521,7 +521,7 @@ export default function Home() {
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
                 href="#"
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md bg-teal-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
               >
                 Get started
               </a>
@@ -535,7 +535,7 @@ export default function Home() {
             aria-hidden="true"
           >
             <div
-              className="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
+              className="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#a5f3fc] to-[#14b8a6] opacity-30"
               style={{
                 clipPath:
                   'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
@@ -557,7 +557,7 @@ export default function Home() {
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
             <img
               className="h-7"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              src="https://tailwindui.com/img/logos/mark.svg?color=teal&shade=600"
               alt="Company name"
             />
             <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
