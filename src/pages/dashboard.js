@@ -10,6 +10,7 @@ import {
     HomeIcon,
     BuildingStorefrontIcon,
     XMarkIcon,
+    PlusSmallIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
@@ -20,8 +21,6 @@ import CreateTrip from '@/components/create-trip'
 
 import authService from '@/utils/authService'
 import Link from 'next/link'
-
-
 
 
 const userNavigation = [
@@ -59,7 +58,6 @@ export default function Dashboard() {
         { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
         { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
     ])
-
     const handleNavigation = (navigation, item) => {
         switch (navigation) {
             case 'dashboardNavigation':
@@ -181,6 +179,35 @@ export default function Dashboard() {
                                                                             : 'text-teal-200 hover:text-white hover:bg-teal-700',
                                                                         'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                                     )}
+                                                                    onClick={() => handleNavigation('dashboardNavigation', item)}
+                                                                >
+                                                                    <item.icon
+                                                                        className={classNames(
+                                                                            item.current ? 'text-white' : 'text-teal-200 group-hover:text-white',
+                                                                            'h-6 w-6 shrink-0'
+                                                                        )}
+                                                                        aria-hidden="true"
+                                                                    />
+                                                                    {item.name}
+                                                                </a>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <div className="text-xs font-semibold leading-6 text-gray-200">Manage Trip</div>
+                                                    <ul role="list" className="-mx-2 mt-2 space-y-1">
+                                                        {manageTripNavigation.map((item) => (
+                                                            <li key={item.name}>
+                                                                <a
+                                                                    href={item.href}
+                                                                    className={classNames(
+                                                                        item.current
+                                                                            ? 'bg-teal-700 text-white'
+                                                                            : 'text-teal-200 hover:text-white hover:bg-teal-700',
+                                                                        'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+                                                                    )}
+                                                                    onClick={() => handleNavigation('manageTripNavigation', item)}
                                                                 >
                                                                     <item.icon
                                                                         className={classNames(
@@ -198,21 +225,22 @@ export default function Dashboard() {
                                                 <li>
                                                     <div className="text-xs font-semibold leading-6 text-teal-200">Your teams</div>
                                                     <ul role="list" className="-mx-2 mt-2 space-y-1">
-                                                        {yourTripNavigation.map((team) => (
-                                                            <li key={team.name}>
+                                                        {yourTripNavigation.map((item) => (
+                                                            <li key={item.name}>
                                                                 <a
-                                                                    href={team.href}
+                                                                    href={item.href}
                                                                     className={classNames(
-                                                                        team.current
+                                                                        item.current
                                                                             ? 'bg-teal-700 text-white'
                                                                             : 'text-teal-200 hover:text-white hover:bg-teal-700',
                                                                         'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                                     )}
+                                                                    onClick={() => handleNavigation('yourTripNavigation', item)}
                                                                 >
                                                                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-teal-400 bg-teal-500 text-[0.625rem] font-medium text-white">
-                                                                        {team.initial}
+                                                                        {item.initial}
                                                                     </span>
-                                                                    <span className="truncate">{team.name}</span>
+                                                                    <span className="truncate">{item.name}</span>
                                                                 </a>
                                                             </li>
                                                         ))}
@@ -309,7 +337,12 @@ export default function Dashboard() {
                                     </ul>
                                 </li>
                                 <li>
-                                    <div className="text-xs font-semibold leading-6 text-gray-200">Your Trips</div>
+                                    <div className='flex justify-between'>
+                                        <div className="text-xs font-semibold leading-6 text-gray-200">Your Trips</div>
+                                        <button className='rounded-md hover:text-white hover:bg-teal-700'>
+                                            <PlusSmallIcon className='h-6 w-6 shrink-0 text-gray-200' />
+                                        </button>
+                                    </div>
                                     <ul role="list" className="-mx-2 mt-2 space-y-1">
                                         {yourTripNavigation.map((item) => (
                                             <li key={item.name}>
