@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, models } = require('mongoose');
 
 const tripSchema = new Schema(
     {
@@ -32,6 +32,6 @@ const tripSchema = new Schema(
     }
 );
 
-const Trip = model('vacayte2Trip', tripSchema);
+const Trip = models.vacayte2Trip || model('vacayte2Trip', tripSchema);
 
 module.exports = Trip;

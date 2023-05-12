@@ -1,5 +1,7 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, models } = require('mongoose');
 const bcrypt = require('bcrypt');
+
+const Trip = require('./Trip')
 
 const userSchema = new Schema(
     {
@@ -29,11 +31,11 @@ const userSchema = new Schema(
             type: String,
             required: true,
         },
-        // trips:
+        trips: [Trip.schema],
     }
 );
 
-userSchema.pre('save', async (next) => {
+userSchema.pre('save', async function (next) {
     if (this.isNew || this.isModified('password')) {
         this.password = await bcrypt.hash(this.password, 10);
     }
@@ -41,10 +43,10 @@ userSchema.pre('save', async (next) => {
     next();
 });
 
-userSchema.methods.isCorrectPassword = async (password) => {
+userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
 
-const User = model('vacayte2User', userSchema);
+const User = models.vacayte2User || model('vacayte2User', userSchema);
 
 module.exports = User;
