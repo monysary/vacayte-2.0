@@ -158,17 +158,18 @@ export default function Dashboard() {
 
                                     {/* Sidebar component, swap this element with another sidebar if you like */}
                                     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-teal-600 px-6 pb-4">
-                                        <div className="flex h-16 shrink-0 items-center">
+                                        <Link href='/' className="flex h-16 shrink-0 items-center">
                                             <img
                                                 className="h-8 w-auto"
                                                 src="https://tailwindui.com/img/logos/mark.svg?color=white"
                                                 alt="Your Company"
                                             />
-                                        </div>
+                                        </Link>
                                         <nav className="flex flex-1 flex-col">
                                             <ul role="list" className="flex flex-1 flex-col gap-y-7">
                                                 <li>
-                                                    <ul role="list" className="-mx-2 space-y-1">
+                                                    <div className="text-xs font-semibold leading-6 text-gray-200">Dashboard</div>
+                                                    <ul role="list" className="-mx-2 mt-2 space-y-1">
                                                         {dashboardNavigation.map((item) => (
                                                             <li key={item.name}>
                                                                 <a
@@ -223,7 +224,12 @@ export default function Dashboard() {
                                                     </ul>
                                                 </li>
                                                 <li>
-                                                    <div className="text-xs font-semibold leading-6 text-teal-200">Your teams</div>
+                                                    <div className='flex justify-between'>
+                                                        <div className="text-xs font-semibold leading-6 text-gray-200">Your Trips</div>
+                                                        <button className='rounded-md hover:text-white hover:bg-teal-700'>
+                                                            <PlusSmallIcon className='h-6 w-6 shrink-0 text-gray-200' />
+                                                        </button>
+                                                    </div>
                                                     <ul role="list" className="-mx-2 mt-2 space-y-1">
                                                         {yourTripNavigation.map((item) => (
                                                             <li key={item.name}>
