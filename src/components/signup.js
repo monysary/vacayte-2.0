@@ -13,7 +13,7 @@ export default function Signup({ toggleHidden, setToggleHidden }) {
         password: '',
         confirmPassword: '',
     })
-    const handleSignupForm = ({ target: { name, value } }) => {
+    const handleInputChange = ({ target: { name, value } }) => {
         setSignupForm({ ...signupForm, [name]: value })
     }
 
@@ -69,7 +69,7 @@ export default function Signup({ toggleHidden, setToggleHidden }) {
                                             type="text"
                                             required
                                             value={signupForm.firstName}
-                                            onChange={handleSignupForm}
+                                            onChange={handleInputChange}
                                         />
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@ export default function Signup({ toggleHidden, setToggleHidden }) {
                                             type="text"
                                             required
                                             value={signupForm.lastName}
-                                            onChange={handleSignupForm}
+                                            onChange={handleInputChange}
                                         />
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@ export default function Signup({ toggleHidden, setToggleHidden }) {
                                         type="text"
                                         required
                                         value={signupForm.username}
-                                        onChange={handleSignupForm}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </div>
@@ -118,7 +118,7 @@ export default function Signup({ toggleHidden, setToggleHidden }) {
                                         type="email"
                                         required
                                         value={signupForm.email}
-                                        onChange={handleSignupForm}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ export default function Signup({ toggleHidden, setToggleHidden }) {
                                         type="password"
                                         required
                                         value={signupForm.password}
-                                        onChange={handleSignupForm}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                                 <label className="text-xs text-gray-500">
@@ -153,7 +153,7 @@ export default function Signup({ toggleHidden, setToggleHidden }) {
                                         type="password"
                                         required
                                         value={signupForm.confirmPassword}
-                                        onChange={handleSignupForm}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                                 <label className={`text-xs text-red-500 ${signupForm.password === signupForm.confirmPassword && 'hidden'}`}>

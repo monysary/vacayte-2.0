@@ -11,7 +11,7 @@ import {
 import { CheckIcon } from '@heroicons/react/20/solid'
 
 const navigation = [
-  { name: 'Product', href: '#' },
+  { name: 'Dashboard', href: '/dashboard' },
   { name: 'Features', href: '#' },
   { name: 'Marketplace', href: '#' },
   { name: 'Company', href: '#' },

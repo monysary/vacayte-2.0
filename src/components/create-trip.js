@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { XCircleIcon } from '@heroicons/react/24/outline'
 
 import axios from 'axios'
@@ -17,6 +17,74 @@ export default function CreateTrip() {
     }
     countries();
 
+    // Handle trip form
+    const [locationProps, setLocationProps] = useState({
+        city: '',
+        state: '',
+        country: '',
+    })
+    const [tripForm, setTripForm] = useState({
+        name: '',
+        location: '',
+        startDate: '',
+        endDate: '',
+        activity: '',
+        activities: [],
+    })
+    const handleInputChange = ({ target: { name, value } }) => {
+        if (name === 'city' || name === 'state' || name === 'country') {
+            setLocationProps({ ...locationProps, [name]: value })
+        } else {
+            setTripForm({ ...tripForm, [name]: value })
+        }
+    }
+    useEffect(() => {
+        const { city, state, country } = locationProps
+        const locationArr = [city, state, country]
+        setTripForm({ ...tripForm, location: locationArr.join(', ') })
+
+    }, [locationProps])
+
+    // Adding & removing an activity to tripForm.activities array
+    const handleAddActivity = () => {
+        if (tripForm.activity !== '') {
+            setTripForm({
+                ...tripForm,
+                activities: [...tripForm.activities, { 'name': tripForm.activity }],
+                activity: ''
+            })
+        }
+        return
+    }
+    const handleRemoveActivity = (activityName) => {
+        setTripForm({
+            ...tripForm,
+            activities: tripForm.activities.filter((item) => item.name !== activityName)
+        })
+    }
+
+    // Toggle show activities error
+    const [hideError, setHideError] = useState()
+    useEffect(() => {
+        if (tripForm.activities.length < 1) {
+            setHideError(false)
+        } else {
+            setHideError(true)
+        }
+
+    }, [tripForm.activities.length])
+
+    // Adding new trip to database
+    const createNewTrip = (event) => {
+        event.preventDefault();
+
+        if (tripForm.activities.length < 1) {
+            return
+        }
+
+        console.log(tripForm);
+    }
+
     return (
         <div className='space-y-8'>
             <div className="md:flex md:items-center md:justify-between border-b border-gray-900/10 pb-4">
@@ -26,7 +94,7 @@ export default function CreateTrip() {
                     </h2>
                 </div>
             </div>
-            <form className='md:px-40'>
+            <form className='md:px-40' onSubmit={createNewTrip}>
                 <div className="space-y-8">
                     <div className="border-b border-gray-900/10 pb-8">
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -39,7 +107,9 @@ export default function CreateTrip() {
                                         name="name"
                                         type="text"
                                         required
-                                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                                        value={tripForm.name}
+                                        onChange={handleInputChange}
+                                        className="block w-full rounded-md outline-0 border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
@@ -53,7 +123,9 @@ export default function CreateTrip() {
                                         type="date"
                                         name="startDate"
                                         required
-                                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                                        value={tripForm.startDate}
+                                        onChange={handleInputChange}
+                                        className="block w-full rounded-md outline-0 border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
@@ -67,7 +139,9 @@ export default function CreateTrip() {
                                         type="date"
                                         name="endDate"
                                         required
-                                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                                        value={tripForm.endDate}
+                                        onChange={handleInputChange}
+                                        className="block w-full rounded-md outline-0 border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
@@ -81,7 +155,9 @@ export default function CreateTrip() {
                                         type="text"
                                         name="city"
                                         required
-                                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                                        value={locationProps.city}
+                                        onChange={handleInputChange}
+                                        className="block w-full rounded-md outline-0 border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
@@ -95,7 +171,9 @@ export default function CreateTrip() {
                                         type="text"
                                         name="state"
                                         required
-                                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                                        value={locationProps.state}
+                                        onChange={handleInputChange}
+                                        className="block w-full rounded-md outline-0 border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
@@ -108,7 +186,9 @@ export default function CreateTrip() {
                                     <select
                                         name="country"
                                         required
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                        value={locationProps.country}
+                                        onChange={handleInputChange}
+                                        className="block w-full rounded-md outline-0 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                     >
                                         <option></option>
                                         {countriesList?.map((country) => {
@@ -126,28 +206,49 @@ export default function CreateTrip() {
                                 </label>
                                 <div className="mt-2">
                                     <input
-                                        name="activities"
+                                        name="activity"
                                         type="text"
-                                        required
-                                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+                                        value={tripForm.activity}
+                                        onChange={handleInputChange}
+                                        className="block w-full rounded-md outline-0 border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
+                            </div>
+
+                            <div className="sm:col-span-1 self-end">
+                                <button
+                                    type="button"
+                                    className="rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                                    onClick={handleAddActivity}
+                                >
+                                    Add
+                                </button>
                             </div>
                         </div>
                     </div>
 
                     <div className="border-b border-gray-900/10 pb-12">
                         <h2 className="text-lg leading-7 text-gray-900">Your Activities:</h2>
+                        <label className={`text-xs text-red-500 ${hideError && 'hidden'}`}>
+                            Please add at least one activity
+                        </label>
 
-                        <div className="mt-10 flex">
-                            <div className='relative text-teal-600 border-2 border-teal-600 font-medium rounded-lg text-sm px-5 py-2.5'>
-                                Randomness
-                                <XCircleIcon
-                                    fill='true'
-                                    className='h-6 w-6 shrink-0 absolute right-[-10px] top-[-10px] cursor-pointer text-white'
-                                // onClick={handleDelete}
-                                />
-                            </div>
+                        <div className="mt-10 flex flex-wrap gap-4">
+                            {
+                                tripForm.activities.map((item) => {
+                                    return (
+                                        <div key={item.name} className='relative text-teal-600 border-2 border-teal-600 font-medium rounded-lg text-sm px-5 py-2.5'>
+                                            {item.name}
+                                            <XCircleIcon
+                                                fill='true'
+                                                className='h-6 w-6 shrink-0 absolute right-[-10px] top-[-10px] cursor-pointer text-white'
+                                                onClick={() => handleRemoveActivity(item.name)}
+                                            />
+                                        </div>
+                                    )
+                                })
+                            }
+
                         </div>
                     </div>
                 </div>

@@ -14,7 +14,7 @@ export default function Login() {
         username: '',
         password: '',
     })
-    const handleLoginForm = ({ target: { name, value } }) => {
+    const handleInputChange = ({ target: { name, value } }) => {
         setLoginForm({ ...loginForm, [name]: value })
     }
 
@@ -57,7 +57,7 @@ export default function Login() {
                                             type="text"
                                             required
                                             value={loginForm.username}
-                                            onChange={handleLoginForm}
+                                            onChange={handleInputChange}
                                         />
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@ export default function Login() {
                                             type="password"
                                             required
                                             value={loginForm.password}
-                                            onChange={handleLoginForm}
+                                            onChange={handleInputChange}
                                         />
                                     </div>
                                 </div>
