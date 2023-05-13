@@ -15,7 +15,7 @@ import {
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
 import Calendar from '@/components/calendar'
-import Itinerary from '@/components/itinerary'
+import CreateItinerary from '@/components/create-itinerary'
 import Activities from '@/components/activities'
 import CreateTrip from '@/components/create-trip'
 
@@ -50,7 +50,7 @@ export default function Dashboard() {
     ])
     const [manageTripNavigation, setManageTripNavigation] = useState([
         { name: 'Activities', href: '#', icon: BuildingStorefrontIcon, current: false },
-        { name: 'Create Itinerary', href: '#', icon: BookOpenIcon, current: false },
+        { name: 'Organize Itinerary', href: '#', icon: BookOpenIcon, current: false },
         { name: 'View Itinerary', href: '#', icon: NewspaperIcon, current: false },
     ])
     const [yourTripNavigation, setYourTripNavigation] = useState([
@@ -477,9 +477,9 @@ export default function Dashboard() {
                         <div className="px-4 sm:px-6 lg:px-8">
                             {/* Your content */}
                             <CreateTrip />
+                            {/* <Calendar />
                             <Activities />
-                            <Calendar />
-                            <Itinerary />
+                            <CreateItinerary /> */}
                         </div>
                     </main>
                 </div>
