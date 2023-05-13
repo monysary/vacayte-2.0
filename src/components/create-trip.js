@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { XCircleIcon } from '@heroicons/react/24/outline'
 
-import axios from 'axios'
-
 export default function CreateTrip() {
     // Fetching list of country names
     const [countriesList, setCountriesList] = useState()
     const countries = async () => {
-        const { data } = await axios.get('https://restcountries.com/v3.1/all')
+        const response = await fetch('https://restcountries.com/v3.1/all')
+        const data = await response.json()
 
         const countriesArr = data.map((country) => {
             return country.name.common

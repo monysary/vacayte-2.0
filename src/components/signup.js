@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios"
 
 import authService from "@/utils/authService";
 
@@ -22,7 +21,14 @@ export default function Signup({ toggleHidden, setToggleHidden }) {
         event.preventDefault();
 
         try {
-            const { data } = await axios.post('/api/user/signup', signupForm)
+            const response = await fetch('/api/user/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(signupForm)
+            })
+            const data = await response.json()
             
             authService.login(data.token)
             

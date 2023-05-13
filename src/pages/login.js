@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from "axios"
 
 import Signup from "@/components/signup"
 
@@ -23,7 +22,14 @@ export default function Login() {
         event.preventDefault();
 
         try {
-            const { data } = await axios.post('/api/user/login', loginForm)
+            const response = await fetch('/api/user/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(loginForm)
+            })
+            const data = await response.json()
 
             authService.login(data.token)
 
