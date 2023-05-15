@@ -1,4 +1,4 @@
-const { Schema, model, models } = require('mongoose');
+const { Schema, model, models, Types } = require('mongoose');
 
 const tripSchema = new Schema(
     {
@@ -33,6 +33,17 @@ const tripSchema = new Schema(
                 },
             }]
         }],
+        owner: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: 'vacayte2User'
+        }
+    },
+    {
+        timestamps: {
+            createdAt: 'created_at',
+            updatedAt: 'updated_at'
+        }
     }
 );
 

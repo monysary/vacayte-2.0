@@ -1,8 +1,6 @@
 const { Schema, model, models } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const Trip = require('./Trip')
-
 const userSchema = new Schema(
     {
         firstName: {
@@ -31,7 +29,10 @@ const userSchema = new Schema(
             type: String,
             required: true,
         },
-        trips: [Trip.schema],
+        trips: [{
+            type: Schema.Types.ObjectId,
+            ref: 'vacayte2Trip'
+        }],
     }
 );
 

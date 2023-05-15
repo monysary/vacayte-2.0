@@ -121,6 +121,8 @@ export default function Dashboard() {
         } else if (manageTrip) {
             setActiveComponent(manageTrip.name)
             return
+        } else if (!dashboard && !manageTrip) {
+            return
         } else {
             setActiveComponent('Home')
         }
@@ -128,6 +130,16 @@ export default function Dashboard() {
     }, [dashboardNavigation, manageTripNavigation])
     const handleCreateTrip = () => {
         setActiveComponent('Create Trip')
+        setDashboardNavigation(
+            dashboardNavigation.map((object) => {
+                return { ...object, current: false }
+            })
+        )
+        setManageTripNavigation(
+            manageTripNavigation.map((object) => {
+                return { ...object, current: false }
+            })
+        )
     }
 
 
@@ -244,7 +256,7 @@ export default function Dashboard() {
                                                 <li>
                                                     <div className='flex justify-between'>
                                                         <div className="text-xs font-semibold leading-6 text-gray-200">Your Trips</div>
-                                                        <button className='rounded-md hover:text-white hover:bg-teal-700'>
+                                                        <button className={`rounded-md hover:text-white hover:bg-teal-700 ${activeComponent === 'Create Trip' && 'text-white bg-teal-700'}`}>
                                                             <PlusSmallIcon onClick={handleCreateTrip} className='h-6 w-6 shrink-0 text-gray-200' />
                                                         </button>
                                                     </div>
@@ -360,7 +372,7 @@ export default function Dashboard() {
                                 <li>
                                     <div className='flex justify-between'>
                                         <div className="text-xs font-semibold leading-6 text-gray-200">Your Trips</div>
-                                        <button className='rounded-md hover:text-white hover:bg-teal-700'>
+                                        <button className={`rounded-md hover:text-white hover:bg-teal-700 ${activeComponent === 'Create Trip' && 'text-white bg-teal-700'}`}>
                                             <PlusSmallIcon onClick={handleCreateTrip} className='h-6 w-6 shrink-0 text-gray-200' />
                                         </button>
                                     </div>

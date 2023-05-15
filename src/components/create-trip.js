@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { XCircleIcon } from '@heroicons/react/24/outline'
 
+import authService from '@/utils/authService'
+
 export default function CreateTrip() {
     // Fetching list of country names
     const [countriesList, setCountriesList] = useState()
@@ -89,7 +91,13 @@ export default function CreateTrip() {
             return
         }
 
-        console.log(tripForm);
+        fetch('/api/trip', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': authService.getToken()
+            }
+        }).then((res) => res.json()).then((data) => console.log(data))
     }
 
     return (
