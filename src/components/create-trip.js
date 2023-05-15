@@ -73,6 +73,14 @@ export default function CreateTrip() {
 
     }, [tripForm.activities.length])
 
+    // Clear activities
+    const handleClearActivities = () => {
+        setTripForm({
+            ...tripForm,
+            activities: []
+        })
+    }
+
     // Adding new trip to database
     const createNewTrip = (event) => {
         event.preventDefault();
@@ -253,8 +261,8 @@ export default function CreateTrip() {
                 </div>
 
                 <div className="mt-6 flex items-center justify-end gap-x-6">
-                    <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
-                        Cancel
+                    <button onClick={handleClearActivities} type="button" className="text-sm font-semibold leading-6 text-gray-900">
+                        Clear Activities
                     </button>
                     <button
                         type="submit"

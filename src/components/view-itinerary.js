@@ -3,7 +3,7 @@ const people = [
     // More people...
   ]
   
-  export default function CreateItinerary() {
+  export default function ViewItinerary() {
     return (
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
