@@ -56,12 +56,12 @@ export default function Dashboard() {
     ])
     const [yourTripNavigation, setYourTripNavigation] = useState([])
 
-    const handleNavigation = (navigation, item) => {
+    const handleNavigation = (navigation, name) => {
         switch (navigation) {
             case 'dashboardNavigation':
                 setDashboardNavigation(
                     dashboardNavigation.map((object) => {
-                        if (object === item) {
+                        if (object.name === name) {
                             return { ...object, current: true }
                         } else {
                             return { ...object, current: false }
@@ -77,7 +77,7 @@ export default function Dashboard() {
             case 'manageTripNavigation':
                 setManageTripNavigation(
                     manageTripNavigation.map((object) => {
-                        if (object === item) {
+                        if (object.name === name) {
                             return { ...object, current: true }
                         } else {
                             return { ...object, current: false }
@@ -93,7 +93,7 @@ export default function Dashboard() {
             case 'yourTripNavigation':
                 setYourTripNavigation(
                     yourTripNavigation.map((object) => {
-                        if (object === item) {
+                        if (object.name === name) {
                             return { ...object, current: true }
                         } else {
                             return { ...object, current: false }
@@ -231,7 +231,7 @@ export default function Dashboard() {
                                                                             : 'text-teal-200 hover:text-white hover:bg-teal-700',
                                                                         'w-full group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                                     )}
-                                                                    onClick={() => handleNavigation('dashboardNavigation', item)}
+                                                                    onClick={() => handleNavigation('dashboardNavigation', item.name)}
                                                                 >
                                                                     <item.icon
                                                                         className={classNames(
@@ -258,7 +258,7 @@ export default function Dashboard() {
                                                                             : 'text-teal-200 hover:text-white hover:bg-teal-700',
                                                                         'w-full group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                                     )}
-                                                                    onClick={() => handleNavigation('manageTripNavigation', item)}
+                                                                    onClick={() => handleNavigation('manageTripNavigation', item.name)}
                                                                 >
                                                                     <item.icon
                                                                         className={classNames(
@@ -290,7 +290,7 @@ export default function Dashboard() {
                                                                             : 'text-teal-200 hover:text-white hover:bg-teal-700',
                                                                         'w-full group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                                     )}
-                                                                    onClick={() => handleNavigation('yourTripNavigation', item)}
+                                                                    onClick={() => handleNavigation('yourTripNavigation', item.name)}
                                                                 >
                                                                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-teal-400 bg-teal-500 text-[0.625rem] font-medium text-white">
                                                                         {item.initial}
@@ -347,7 +347,7 @@ export default function Dashboard() {
                                                             : 'text-teal-200 hover:text-white hover:bg-teal-700',
                                                         'w-full group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                     )}
-                                                    onClick={() => handleNavigation('dashboardNavigation', item)}
+                                                    onClick={() => handleNavigation('dashboardNavigation', item.name)}
                                                 >
                                                     <item.icon
                                                         className={classNames(
@@ -374,7 +374,7 @@ export default function Dashboard() {
                                                             : 'text-teal-200 hover:text-white hover:bg-teal-700',
                                                         'w-full group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                     )}
-                                                    onClick={() => handleNavigation('manageTripNavigation', item)}
+                                                    onClick={() => handleNavigation('manageTripNavigation', item.name)}
                                                 >
                                                     <item.icon
                                                         className={classNames(
@@ -406,7 +406,7 @@ export default function Dashboard() {
                                                             : 'text-teal-200 hover:text-white hover:bg-teal-700',
                                                         'w-full group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                     )}
-                                                    onClick={() => handleNavigation('yourTripNavigation', item)}
+                                                    onClick={() => handleNavigation('yourTripNavigation', item.name)}
                                                 >
                                                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-teal-400 bg-teal-500 text-[0.625rem] font-medium text-white">
                                                         {item.initial}
