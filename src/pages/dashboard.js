@@ -24,7 +24,6 @@ import CreateTrip from '@/components/create-trip'
 import authService from '@/utils/authService'
 import Link from 'next/link'
 
-
 const userNavigation = [
     { name: 'Your profile', href: '#' },
     { name: 'Sign out', href: '#' },
@@ -55,11 +54,8 @@ export default function Dashboard() {
         { name: 'Organize Itinerary', icon: BookOpenIcon, current: false },
         { name: 'View Itinerary', icon: NewspaperIcon, current: false },
     ])
-    const [yourTripNavigation, setYourTripNavigation] = useState([
-        { id: 1, name: 'Heroicons', initial: 'H', current: false },
-        { id: 2, name: 'Tailwind Labs', initial: 'T', current: false },
-        { id: 3, name: 'Workcation', initial: 'W', current: false },
-    ])
+    const [yourTripNavigation, setYourTripNavigation] = useState([])
+
     const handleNavigation = (navigation, item) => {
         switch (navigation) {
             case 'dashboardNavigation':
@@ -109,6 +105,29 @@ export default function Dashboard() {
                 break;
         }
     }
+
+    // Populate all of the user's trips on side panel
+    useEffect(() => {
+        fetch('/api/trip', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': authService.getToken()
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                const tripArr = []
+                data.map((item) => {
+                    tripArr.push({
+                        name: item.name,
+                        initial: item.name[0],
+                        current: false,
+                        _id: item._id
+                    })
+                })
+                setYourTripNavigation([...yourTripNavigation, ...tripArr])
+            })
+    }, [])
 
     // Switching Dashboard Components
     const [activeComponent, setActiveComponent] = useState('Home')
@@ -414,7 +433,7 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                {/* Search Bar area */}
+                {/* Main dashboard area */}
                 <div className="lg:pl-72">
                     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
                         <button type="button" className="-m-2.5 p-2.5 text-gray-700 lg:hidden" onClick={() => setSidebarOpen(true)}>
@@ -480,15 +499,15 @@ export default function Dashboard() {
                                             {userNavigation.map((item) => (
                                                 <Menu.Item key={item.name}>
                                                     {({ active }) => (
-                                                        <a
-                                                            href={item.href}
+                                                        <button
                                                             className={classNames(
                                                                 active ? 'bg-gray-50' : '',
                                                                 'block px-3 py-1 text-sm leading-6 text-gray-900'
                                                             )}
+                                                            onClick={() => authService.logout()}
                                                         >
                                                             {item.name}
-                                                        </a>
+                                                        </button>
                                                     )}
                                                 </Menu.Item>
                                             ))}
