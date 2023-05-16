@@ -107,6 +107,7 @@ export default function Dashboard() {
     }
 
     // Populate all of the user's trips on side panel
+    const [toggle, setToggle] = useState(true)
     useEffect(() => {
         fetch('/api/trip', {
             headers: {
@@ -125,9 +126,9 @@ export default function Dashboard() {
                         _id: item._id
                     })
                 })
-                setYourTripNavigation([...yourTripNavigation, ...tripArr])
+                setYourTripNavigation([...tripArr])
             })
-    }, [])
+    }, [toggle])
 
     // Switching Dashboard Components
     const [activeComponent, setActiveComponent] = useState('Home')
@@ -530,7 +531,7 @@ export default function Dashboard() {
                                         : activeComponent === 'View Itinerary'
                                             ? <ViewItinerary />
                                             : activeComponent === 'Create Trip'
-                                                ? <CreateTrip />
+                                                ? <CreateTrip setToggle={setToggle}/>
                                                 : <Home />
                             }
                         </div>
