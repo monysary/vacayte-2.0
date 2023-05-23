@@ -2,14 +2,70 @@ import { useState } from 'react'
 import { HeartIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid'
 
 export default function Activities() {
-    const [people, setPeople] = useState([
+    const [yelpBusinesses, setYelpBusinesses] = useState([
         {
             name: 'Some Restaurant Name',
             category: 'Breakfast food',
             rating: '4 ★',
             yelpLink: 'https://www.yelp.com',
             imageUrl:
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+                'https://source.unsplash.com/random/?vacation',
+        },
+        {
+            name: 'Some Restaurant Name',
+            category: 'Breakfast food',
+            rating: '4 ★',
+            yelpLink: 'https://www.yelp.com',
+            imageUrl:
+                'https://source.unsplash.com/random/?vacation',
+        },
+        {
+            name: 'Some Restaurant Name',
+            category: 'Breakfast food',
+            rating: '4 ★',
+            yelpLink: 'https://www.yelp.com',
+            imageUrl:
+                'https://source.unsplash.com/random/?vacation',
+        },
+        {
+            name: 'Some Restaurant Name',
+            category: 'Breakfast food',
+            rating: '4 ★',
+            yelpLink: 'https://www.yelp.com',
+            imageUrl:
+                'https://source.unsplash.com/random/?vacation',
+        },
+        {
+            name: 'Some Restaurant Name',
+            category: 'Breakfast food',
+            rating: '4 ★',
+            yelpLink: 'https://www.yelp.com',
+            imageUrl:
+                'https://source.unsplash.com/random/?vacation',
+        },
+        {
+            name: 'Some Restaurant Name',
+            category: 'Breakfast food',
+            rating: '4 ★',
+            yelpLink: 'https://www.yelp.com',
+            imageUrl:
+                'https://source.unsplash.com/random/?vacation',
+        },
+        {
+            name: 'Some Restaurant Name',
+            category: 'Breakfast food',
+            rating: '4 ★',
+            yelpLink: 'https://www.yelp.com',
+            imageUrl:
+                'https://source.unsplash.com/random/?vacation',
+        },
+        {
+            name: 'Some Restaurant Name',
+            category: 'Breakfast food',
+            rating: '4 ★',
+            yelpLink: 'https://www.yelp.com',
+            imageUrl:
+                'https://source.unsplash.com/random/?vacation',
         },
     ])
 
@@ -22,27 +78,22 @@ export default function Activities() {
                     </h2>
                 </div>
             </div>
-            <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                {people.map((person) => (
-                    <li
-                        key={person.name}
-                        className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
+            <div className="flex items-center gap-4 overflow-x-auto p-2">
+                {yelpBusinesses.map((business) => (
+                    <div
+                        key={business.name}
+                        className="min-w-[200px] flex flex-col divide-y divide-gray-200 rounded-lg bg-white border border-blue-200 text-center"
                     >
                         <div className="flex flex-1 flex-col p-4">
-                            <img className="mx-auto w-full aspect-square flex-shrink-0 rounded-xl" src={person.imageUrl} alt="" />
-                            <h3 className="inline-flex justify-between items-baseline mt-6 text-sm text-left font-medium text-gray-900">
-                                {person.name}
+                            <img className="mx-auto w-full aspect-square flex-shrink-0 rounded-xl" src={business.imageUrl} alt="" />
+                            <h3 className="inline-flex justify-between items-baseline mt-2 text-sm text-left font-medium text-gray-900">
+                                {business.name}
                                 <span className="whitespace-nowrap rounded-full ml-2 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                    {person.rating}
+                                    {business.rating}
                                 </span>
                             </h3>
                             <dl className="mt-1 flex flex-grow flex-col justify-between">
-                                <dt className="sr-only">Title</dt>
-                                <dd className="text-sm text-left text-gray-500">{person.category}</dd>
-                                <dt className="sr-only">Role</dt>
-                                <dd className="mt-3">
-
-                                </dd>
+                                <dd className="text-sm text-left text-gray-500">{business.category}</dd>
                             </dl>
                         </div>
                         <div>
@@ -57,7 +108,7 @@ export default function Activities() {
                                 </div>
                                 <div className="-ml-px flex w-0 flex-1">
                                     <a
-                                        href={person.yelpLink}
+                                        href={business.yelpLink}
                                         className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
                                         target='_blank'
                                     >
@@ -67,9 +118,9 @@ export default function Activities() {
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     )
 }

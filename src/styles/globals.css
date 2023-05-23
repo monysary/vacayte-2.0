@@ -27,3 +27,13 @@ body {
 #__next {
   height: 100%;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}

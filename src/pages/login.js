@@ -18,9 +18,10 @@ export default function Login() {
     }
 
     // POST request to log in user
+    const [loading, setLoading] = useState(false)
     const userLogin = async (event) => {
         event.preventDefault();
-
+        setLoading(true)
         try {
             const response = await fetch('/api/user/login', {
                 method: 'POST',
@@ -35,6 +36,8 @@ export default function Login() {
 
         } catch (err) {
             console.log(err);
+        } finally {
+            setLoading(false)
         }
 
     }
@@ -86,10 +89,16 @@ export default function Login() {
 
                                 <div>
                                     <button
-                                        className='flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm bg-teal-600 hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
+                                        className='flex w-full justify-center items-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm bg-teal-600 hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
                                         type="submit"
                                     >
-                                        Sign in
+                                        {loading
+                                            ? <svg className='animate-spin -ml-1 mr-3 h-5 w-5 text-white' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx='12' cy='12' r='10' stroke='currentColor' strokeWidth='4'></circle>
+                                                <path className='opacity-75' fill='currentColor' d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            : 'Sign in'
+                                        }
                                     </button>
                                 </div>
                             </form>
@@ -101,7 +110,7 @@ export default function Login() {
                                     <div className="w-full border-t border-gray-300" />
                                 </div>
                                 <div className="relative flex justify-center text-sm font-medium leading-6">
-                                    <span className="bg-white px-6 text-gray-900">
+                                    <span className="bg-slate-50 px-6 text-gray-900">
                                         Don't have an account?
                                         <a className="ml-[10px] font-semibold text-teal-600 hover:text-teal-500 cursor-pointer"
                                             onClick={() => setToggleHidden((prev) => !prev)}
