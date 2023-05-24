@@ -2,15 +2,12 @@ import { useEffect, useState } from 'react'
 import { HeartIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid'
 import authService from '@/utils/authService'
 
-export default function Activities({ currentTrip }) {
-    // const [yelpBusinesses, setYelpBusinesses] = useState([])
-
-    // Fetch user trip information
-    const [userTrip, setUserTrip] = useState()
-    const [tripActivities, setTripActivities] = useState([])
-    const fetchUserTrip = async () => {
+export default function Activities({ activities }) {
+    // Setting up Yelp data object
+    const [tripActivities, setTripActivities] = useState()
+    const fetchYelpData = async (term) => {
         try {
-            const response = await fetch(`/api/trip/userTrip?id=${currentTrip}`, {
+            const response = await fetch(`/api/yelp?location=${activities?.location}&term=${term}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': authService.getToken()
@@ -18,21 +15,19 @@ export default function Activities({ currentTrip }) {
             })
             const data = await response.json()
 
-            setUserTrip(data)
+            console.log(data);
         } catch (err) {
             console.log(err);
-        } finally {
-            console.log(userTrip);
         }
     }
-
-    // Set trip information
     useEffect(() => {
-        fetchUserTrip()
-    }, [currentTrip])
+        activities?.activities.map((item) => {
+            fetchYelpData(item.name)
+        })
+    }, [activities])
 
     return (
-        tripActivities.map((item) => {
+        tripActivities?.map((item) => {
             <div>
                 <div className="md:flex md:items-center md:justify-between border-b border-gray-900/10 pb-4 mb-4">
                     <div className="min-w-0 flex-1">

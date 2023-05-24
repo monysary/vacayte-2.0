@@ -83,14 +83,6 @@ export default function Dashboard() {
         }
 
     }, [dashboardNavigation])
-    const handleCreateTrip = () => {
-        setActiveComponent('Create Trip')
-        setDashboardNavigation(
-            dashboardNavigation.map((object) => {
-                return { ...object, current: false }
-            })
-        )
-    }
 
     // Set currently selected trip
     const [currentTrip, setCurrentTrip] = useState()
@@ -432,15 +424,15 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    <main className="py-4">
-                        <div className="px-4 sm:px-6 lg:px-8">
+                    <main>
+                        <div>
                             {/* Dashboard Contents */}
                             {activeComponent === 'Calendar'
                                 ? <Calendar />
                                 : activeComponent === 'Create Trip'
                                     ? <CreateTrip setToggle={setToggle} />
                                     : activeComponent === 'Trip'
-                                        ? <CurrentTrip />
+                                        ? <CurrentTrip currentTrip={currentTrip} />
                                         : <Home />
                             }
                         </div>
