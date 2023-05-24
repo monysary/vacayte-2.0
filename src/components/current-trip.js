@@ -94,7 +94,7 @@ export default function CurrentTrip({ currentTrip }) {
                 </div>
             </div>
 
-            <div className="py-6">
+            <div>
                 <main>
                     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                         {/* Your content */}
