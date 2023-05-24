@@ -16,8 +16,6 @@ function classNames(...classes) {
 }
 
 export default function CurrentTrip({ currentTrip }) {
-    console.log(currentTrip);
-
     // Handle navigation tab
     const [navigation, setNavigation] = useState([
         { name: 'Activities', icon: BuildingStorefrontIcon, current: true },
@@ -52,7 +50,6 @@ export default function CurrentTrip({ currentTrip }) {
             })
             const data = await response.json()
 
-            console.log(data);
             setActivities({
                 _id: data._id,
                 location: data.location,
@@ -66,7 +63,6 @@ export default function CurrentTrip({ currentTrip }) {
     useEffect(() => {
         fetchUserTrip()
     }, [currentTrip])
-
 
     return (
         <div className="min-h-full">
