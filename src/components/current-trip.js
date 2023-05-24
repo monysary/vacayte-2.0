@@ -19,7 +19,7 @@ export default function CurrentTrip() {
     return (
         <div className="min-h-full">
             <div className="max-w-7xl">
-                <div className="flex h-16 justify-around sm:justify-start sm:-my-px sm:ml-6 sm:space-x-8">
+                <div className="flex h-16 justify-around sm:justify-start sm:-my-px sm:space-x-8">
                     {navigation.map((item) => (
                         <button
                             key={item.name}
@@ -27,7 +27,7 @@ export default function CurrentTrip() {
                                 item.current
                                     ? 'border-teal-500 text-gray-900'
                                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
-                                'inline-flex items-center border-b-2 px-1 pt-1 text-[0] sm:text-sm font-medium'
+                                'inline-flex items-center sm:gap-2 border-b-2 px-4 pt-1 text-[0] sm:text-sm font-medium'
                             )}
                             aria-current={item.current ? 'page' : undefined}
                         >
@@ -52,7 +52,9 @@ export default function CurrentTrip() {
                     </div>
                 </header>
                 <main>
-                    <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">{/* Your content */}</div>
+                    <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                        {/* Your content */}
+                    </div>
                 </main>
             </div>
         </div>

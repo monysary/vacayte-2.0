@@ -5,21 +5,14 @@ import {
     BellIcon,
     CalendarDaysIcon,
     Cog6ToothIcon,
-    BuildingStorefrontIcon,
-    BookOpenIcon,
-    NewspaperIcon,
     HomeIcon,
     XMarkIcon,
-    PlusSmallIcon,
-    GlobeAsiaAustraliaIcon
+    PencilSquareIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
 import Home from '@/components/home'
 import Calendar from '@/components/calendar'
-import Activities from '@/components/activities'
-import OrganizeItinerary from '@/components/organize-itinerary'
-import ViewItinerary from '@/components/view-itinerary'
 import CreateTrip from '@/components/create-trip'
 import CurrentTrip from '@/components/current-trip'
 
@@ -50,13 +43,8 @@ export default function Dashboard() {
     const [dashboardNavigation, setDashboardNavigation] = useState([
         { name: 'Home', icon: HomeIcon, current: true },
         { name: 'Calendar', icon: CalendarDaysIcon, current: false },
-        { name: 'Create Trip', icon: GlobeAsiaAustraliaIcon, current: false },
+        { name: 'Create Trip', icon: PencilSquareIcon, current: false },
     ])
-    // const [manageTripNavigation, setManageTripNavigation] = useState([
-    //     { name: 'Activities', icon: BuildingStorefrontIcon, current: false },
-    //     { name: 'Organize Itinerary', icon: BookOpenIcon, current: false },
-    //     { name: 'View Itinerary', icon: NewspaperIcon, current: false },
-    // ])
     const [yourTripNavigation, setYourTripNavigation] = useState([])
 
     // Populate all of the user's trips on side panel
@@ -87,23 +75,14 @@ export default function Dashboard() {
     const [activeComponent, setActiveComponent] = useState('Home')
     useEffect(() => {
         const dashboard = dashboardNavigation.find((object) => object.current)
-        // const manageTrip = manageTripNavigation.find((object) => object.current)
         if (dashboard) {
             setActiveComponent(dashboard.name)
             return
         } else {
             setActiveComponent('Trip')
         }
-        // else if (manageTrip) {
-        //     setActiveComponent(manageTrip.name)
-        //     return
-        // } else if (!dashboard && !manageTrip) {
-        //     return
-        // } else {
-        //     setActiveComponent('Home')
-        // }
 
-    }, [dashboardNavigation]) //, manageTripNavigation])
+    }, [dashboardNavigation])
     const handleCreateTrip = () => {
         setActiveComponent('Create Trip')
         setDashboardNavigation(
@@ -111,11 +90,6 @@ export default function Dashboard() {
                 return { ...object, current: false }
             })
         )
-        // setManageTripNavigation(
-        //     manageTripNavigation.map((object) => {
-        //         return { ...object, current: false }
-        //     })
-        // )
     }
 
     // Set currently selected trip
@@ -139,28 +113,7 @@ export default function Dashboard() {
                         return { ...object, current: false }
                     })
                 )
-                // setManageTripNavigation(
-                //     manageTripNavigation.map((object) => {
-                //         return { ...object, current: false }
-                //     })
-                // )
                 break;
-            // case 'manageTripNavigation':
-            //     setManageTripNavigation(
-            //         manageTripNavigation.map((object) => {
-            //             if (object.name === name) {
-            //                 return { ...object, current: true }
-            //             } else {
-            //                 return { ...object, current: false }
-            //             }
-            //         })
-            //     )
-            //     setDashboardNavigation(
-            //         dashboardNavigation.map((object) => {
-            //             return { ...object, current: false }
-            //         })
-            //     )
-            //     break;
             case 'yourTripNavigation':
                 setYourTripNavigation(
                     yourTripNavigation.map((object) => {
@@ -266,39 +219,9 @@ export default function Dashboard() {
                                                         ))}
                                                     </ul>
                                                 </li>
-                                                {/* <li>
-                                                    <div className="text-xs font-semibold leading-6 text-gray-200">Manage Trip</div>
-                                                    <ul role="list" className="-mx-2 mt-2 space-y-1">
-                                                        {manageTripNavigation.map((item) => (
-                                                            <li key={item.name}>
-                                                                <button
-                                                                    className={classNames(
-                                                                        item.current
-                                                                            ? 'bg-teal-700 text-white'
-                                                                            : 'text-teal-200 hover:text-white hover:bg-teal-700',
-                                                                        'w-full group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-                                                                    )}
-                                                                    onClick={() => handleNavigation('manageTripNavigation', item.name)}
-                                                                >
-                                                                    <item.icon
-                                                                        className={classNames(
-                                                                            item.current ? 'text-white' : 'text-teal-200 group-hover:text-white',
-                                                                            'h-6 w-6 shrink-0'
-                                                                        )}
-                                                                        aria-hidden="true"
-                                                                    />
-                                                                    {item.name}
-                                                                </button>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </li> */}
                                                 <li>
                                                     <div className='flex justify-between'>
                                                         <div className="text-xs font-semibold leading-6 text-gray-200">Your Trips</div>
-                                                        {/* <button className={`rounded-md hover:text-white hover:bg-teal-700 ${activeComponent === 'Create Trip' && 'text-white bg-teal-700'}`}>
-                                                            <PlusSmallIcon onClick={handleCreateTrip} className='h-6 w-6 shrink-0 text-gray-200' />
-                                                        </button> */}
                                                     </div>
                                                     <ul role="list" className="-mx-2 mt-2 space-y-1">
                                                         {yourTripNavigation.map((item) => (
@@ -382,39 +305,9 @@ export default function Dashboard() {
                                         ))}
                                     </ul>
                                 </li>
-                                {/* <li>
-                                    <div className="text-xs font-semibold leading-6 text-gray-200">Manage Trip</div>
-                                    <ul role="list" className="-mx-2 mt-2 space-y-1">
-                                        {manageTripNavigation.map((item) => (
-                                            <li key={item.name}>
-                                                <button
-                                                    className={classNames(
-                                                        item.current
-                                                            ? 'bg-teal-700 text-white'
-                                                            : 'text-teal-200 hover:text-white hover:bg-teal-700',
-                                                        'w-full group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-                                                    )}
-                                                    onClick={() => handleNavigation('manageTripNavigation', item.name)}
-                                                >
-                                                    <item.icon
-                                                        className={classNames(
-                                                            item.current ? 'text-white' : 'text-teal-200 group-hover:text-white',
-                                                            'h-6 w-6 shrink-0'
-                                                        )}
-                                                        aria-hidden="true"
-                                                    />
-                                                    {item.name}
-                                                </button>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </li> */}
                                 <li>
                                     <div className='flex justify-between'>
                                         <div className="text-xs font-semibold leading-6 text-gray-200">Your Trips</div>
-                                        {/* <button className={`rounded-md hover:text-white hover:bg-teal-700 ${activeComponent === 'Create Trip' && 'text-white bg-teal-700'}`}>
-                                            <PlusSmallIcon onClick={handleCreateTrip} className='h-6 w-6 shrink-0 text-gray-200' />
-                                        </button> */}
                                     </div>
                                     <ul role="list" className="-mx-2 mt-2 space-y-1">
                                         {yourTripNavigation.map((item) => (
@@ -544,12 +437,6 @@ export default function Dashboard() {
                             {/* Dashboard Contents */}
                             {activeComponent === 'Calendar'
                                 ? <Calendar />
-                                // : activeComponent === 'Activities'
-                                //     ? <Activities currentTrip={currentTrip} />
-                                //     : activeComponent === 'Organize Itinerary'
-                                //         ? <OrganizeItinerary />
-                                //         : activeComponent === 'View Itinerary'
-                                //             ? <ViewItinerary />
                                 : activeComponent === 'Create Trip'
                                     ? <CreateTrip setToggle={setToggle} />
                                     : activeComponent === 'Trip'
