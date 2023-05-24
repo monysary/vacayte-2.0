@@ -1,7 +1,10 @@
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            const response = await fetch(`${process.env.YELP_ENDPOINT_LOCATION}los%20angeles,ca${process.env.YELP_TERM}bars`,
+            const location = req.query.location.split(' ').join('%20')
+            // console.log('LOCATION: ', location);
+            console.log(req.query);
+            const response = await fetch(`${process.env.YELP_ENDPOINT_LOCATION}${location}${process.env.YELP_TERM}${req.query.term}`,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -13,7 +16,6 @@ export default async function handler(req, res) {
             const data = await response.json()
 
             res.status(200).json(data)
-
         } catch (err) {
             console.log(err);
             res.status(500).json({ message: 'Internal Server Error' })

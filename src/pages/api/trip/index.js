@@ -17,14 +17,14 @@ export default async function handler(req, res) {
                 try {
                     const trips = await Trip.find({ owner: req.user._id })
                     if (!trips) {
-                        return res.status(500).json({ message: 'There are no trips' })
+                        return res.status(404).json({ message: 'No trips found' })
                     }
 
                     res.status(200).json(trips)
 
                 } catch (err) {
                     console.log(err);
-                    res.status(500).json('Invalid request')
+                    res.status(500).json({ message: 'Internal Server Error' })
                 }
                 break;
 
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
                 try {
                     const newTrip = await Trip.create({ ...req.body, owner: req.user._id })
                     if (!newTrip) {
-                        return res.status(500).json({ message: 'Incorrect request' })
+                        return res.status(400).json({ message: 'Incorrect request' })
                     }
                     await User.findByIdAndUpdate(req.user._id, { $push: { trips: newTrip._id } })
 
@@ -40,14 +40,14 @@ export default async function handler(req, res) {
 
                 } catch (err) {
                     console.log(err);
-                    res.status(500).json({ message: 'Invalid request' })
+                    res.status(500).json({ message: 'Internal Server Error' })
                 }
                 break;
             case 'DELETE':
                 try {
                     const deletedTrip = await Trip.findByIdAndDelete(req.query._id)
                     if (!deletedTrip) {
-                        return res.status(500).json({ message: 'Trip does not exist' })
+                        return res.status(400).json({ message: 'Trip does not exist' })
                     }
 
                     const updatedUser = await User.findByIdAndUpdate(req.user._id, {
@@ -63,7 +63,7 @@ export default async function handler(req, res) {
 
                 } catch (err) {
                     console.log(err);
-                    res.status(500).json({ message: 'Invalid request' })
+                    res.status(500).json({ message: 'Internal Server Error' })
                 }
                 break;
 

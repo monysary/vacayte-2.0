@@ -5,12 +5,13 @@ import {
     BellIcon,
     CalendarDaysIcon,
     Cog6ToothIcon,
-    NewspaperIcon,
-    BookOpenIcon,
-    HomeIcon,
     BuildingStorefrontIcon,
+    BookOpenIcon,
+    NewspaperIcon,
+    HomeIcon,
     XMarkIcon,
     PlusSmallIcon,
+    GlobeAsiaAustraliaIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
@@ -20,6 +21,7 @@ import Activities from '@/components/activities'
 import OrganizeItinerary from '@/components/organize-itinerary'
 import ViewItinerary from '@/components/view-itinerary'
 import CreateTrip from '@/components/create-trip'
+import CurrentTrip from '@/components/current-trip'
 
 import authService from '@/utils/authService'
 import Link from 'next/link'
@@ -48,63 +50,14 @@ export default function Dashboard() {
     const [dashboardNavigation, setDashboardNavigation] = useState([
         { name: 'Home', icon: HomeIcon, current: true },
         { name: 'Calendar', icon: CalendarDaysIcon, current: false },
+        { name: 'Create Trip', icon: GlobeAsiaAustraliaIcon, current: false },
     ])
-    const [manageTripNavigation, setManageTripNavigation] = useState([
-        { name: 'Activities', icon: BuildingStorefrontIcon, current: false },
-        { name: 'Organize Itinerary', icon: BookOpenIcon, current: false },
-        { name: 'View Itinerary', icon: NewspaperIcon, current: false },
-    ])
+    // const [manageTripNavigation, setManageTripNavigation] = useState([
+    //     { name: 'Activities', icon: BuildingStorefrontIcon, current: false },
+    //     { name: 'Organize Itinerary', icon: BookOpenIcon, current: false },
+    //     { name: 'View Itinerary', icon: NewspaperIcon, current: false },
+    // ])
     const [yourTripNavigation, setYourTripNavigation] = useState([])
-
-    const handleNavigation = (navigation, name) => {
-        switch (navigation) {
-            case 'dashboardNavigation':
-                setDashboardNavigation(
-                    dashboardNavigation.map((object) => {
-                        if (object.name === name) {
-                            return { ...object, current: true }
-                        } else {
-                            return { ...object, current: false }
-                        }
-                    })
-                )
-                setManageTripNavigation(
-                    manageTripNavigation.map((object) => {
-                        return { ...object, current: false }
-                    })
-                )
-                break;
-            case 'manageTripNavigation':
-                setManageTripNavigation(
-                    manageTripNavigation.map((object) => {
-                        if (object.name === name) {
-                            return { ...object, current: true }
-                        } else {
-                            return { ...object, current: false }
-                        }
-                    })
-                )
-                setDashboardNavigation(
-                    dashboardNavigation.map((object) => {
-                        return { ...object, current: false }
-                    })
-                )
-                break;
-            case 'yourTripNavigation':
-                setYourTripNavigation(
-                    yourTripNavigation.map((object) => {
-                        if (object.name === name) {
-                            return { ...object, current: true }
-                        } else {
-                            return { ...object, current: false }
-                        }
-                    })
-                )
-                break;
-            default:
-                break;
-        }
-    }
 
     // Populate all of the user's trips on side panel
     const [toggle, setToggle] = useState(true)
@@ -134,20 +87,23 @@ export default function Dashboard() {
     const [activeComponent, setActiveComponent] = useState('Home')
     useEffect(() => {
         const dashboard = dashboardNavigation.find((object) => object.current)
-        const manageTrip = manageTripNavigation.find((object) => object.current)
+        // const manageTrip = manageTripNavigation.find((object) => object.current)
         if (dashboard) {
             setActiveComponent(dashboard.name)
             return
-        } else if (manageTrip) {
-            setActiveComponent(manageTrip.name)
-            return
-        } else if (!dashboard && !manageTrip) {
-            return
         } else {
-            setActiveComponent('Home')
+            setActiveComponent('Trip')
         }
+        // else if (manageTrip) {
+        //     setActiveComponent(manageTrip.name)
+        //     return
+        // } else if (!dashboard && !manageTrip) {
+        //     return
+        // } else {
+        //     setActiveComponent('Home')
+        // }
 
-    }, [dashboardNavigation, manageTripNavigation])
+    }, [dashboardNavigation]) //, manageTripNavigation])
     const handleCreateTrip = () => {
         setActiveComponent('Create Trip')
         setDashboardNavigation(
@@ -155,13 +111,77 @@ export default function Dashboard() {
                 return { ...object, current: false }
             })
         )
-        setManageTripNavigation(
-            manageTripNavigation.map((object) => {
-                return { ...object, current: false }
-            })
-        )
+        // setManageTripNavigation(
+        //     manageTripNavigation.map((object) => {
+        //         return { ...object, current: false }
+        //     })
+        // )
     }
 
+    // Set currently selected trip
+    const [currentTrip, setCurrentTrip] = useState()
+
+    // Handle side panel navigation
+    const handleNavigation = (navigation, name) => {
+        switch (navigation) {
+            case 'dashboardNavigation':
+                setDashboardNavigation(
+                    dashboardNavigation.map((object) => {
+                        if (object.name === name) {
+                            return { ...object, current: true }
+                        } else {
+                            return { ...object, current: false }
+                        }
+                    })
+                )
+                setYourTripNavigation(
+                    yourTripNavigation.map((object) => {
+                        return { ...object, current: false }
+                    })
+                )
+                // setManageTripNavigation(
+                //     manageTripNavigation.map((object) => {
+                //         return { ...object, current: false }
+                //     })
+                // )
+                break;
+            // case 'manageTripNavigation':
+            //     setManageTripNavigation(
+            //         manageTripNavigation.map((object) => {
+            //             if (object.name === name) {
+            //                 return { ...object, current: true }
+            //             } else {
+            //                 return { ...object, current: false }
+            //             }
+            //         })
+            //     )
+            //     setDashboardNavigation(
+            //         dashboardNavigation.map((object) => {
+            //             return { ...object, current: false }
+            //         })
+            //     )
+            //     break;
+            case 'yourTripNavigation':
+                setYourTripNavigation(
+                    yourTripNavigation.map((object) => {
+                        if (object.name === name) {
+                            setCurrentTrip(object._id)
+                            return { ...object, current: true }
+                        } else {
+                            return { ...object, current: false }
+                        }
+                    })
+                )
+                setDashboardNavigation(
+                    dashboardNavigation.map((object) => {
+                        return { ...object, current: false }
+                    })
+                )
+                break;
+            default:
+                break;
+        }
+    }
 
     return (
         <>
@@ -246,7 +266,7 @@ export default function Dashboard() {
                                                         ))}
                                                     </ul>
                                                 </li>
-                                                <li>
+                                                {/* <li>
                                                     <div className="text-xs font-semibold leading-6 text-gray-200">Manage Trip</div>
                                                     <ul role="list" className="-mx-2 mt-2 space-y-1">
                                                         {manageTripNavigation.map((item) => (
@@ -272,13 +292,13 @@ export default function Dashboard() {
                                                             </li>
                                                         ))}
                                                     </ul>
-                                                </li>
+                                                </li> */}
                                                 <li>
                                                     <div className='flex justify-between'>
                                                         <div className="text-xs font-semibold leading-6 text-gray-200">Your Trips</div>
-                                                        <button className={`rounded-md hover:text-white hover:bg-teal-700 ${activeComponent === 'Create Trip' && 'text-white bg-teal-700'}`}>
+                                                        {/* <button className={`rounded-md hover:text-white hover:bg-teal-700 ${activeComponent === 'Create Trip' && 'text-white bg-teal-700'}`}>
                                                             <PlusSmallIcon onClick={handleCreateTrip} className='h-6 w-6 shrink-0 text-gray-200' />
-                                                        </button>
+                                                        </button> */}
                                                     </div>
                                                     <ul role="list" className="-mx-2 mt-2 space-y-1">
                                                         {yourTripNavigation.map((item) => (
@@ -362,7 +382,7 @@ export default function Dashboard() {
                                         ))}
                                     </ul>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <div className="text-xs font-semibold leading-6 text-gray-200">Manage Trip</div>
                                     <ul role="list" className="-mx-2 mt-2 space-y-1">
                                         {manageTripNavigation.map((item) => (
@@ -388,13 +408,13 @@ export default function Dashboard() {
                                             </li>
                                         ))}
                                     </ul>
-                                </li>
+                                </li> */}
                                 <li>
                                     <div className='flex justify-between'>
                                         <div className="text-xs font-semibold leading-6 text-gray-200">Your Trips</div>
-                                        <button className={`rounded-md hover:text-white hover:bg-teal-700 ${activeComponent === 'Create Trip' && 'text-white bg-teal-700'}`}>
+                                        {/* <button className={`rounded-md hover:text-white hover:bg-teal-700 ${activeComponent === 'Create Trip' && 'text-white bg-teal-700'}`}>
                                             <PlusSmallIcon onClick={handleCreateTrip} className='h-6 w-6 shrink-0 text-gray-200' />
-                                        </button>
+                                        </button> */}
                                     </div>
                                     <ul role="list" className="-mx-2 mt-2 space-y-1">
                                         {yourTripNavigation.map((item) => (
@@ -519,20 +539,22 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    <main className="py-10">
+                    <main className="py-4">
                         <div className="px-4 sm:px-6 lg:px-8">
-                            {/* Dashboard Components */}
+                            {/* Dashboard Contents */}
                             {activeComponent === 'Calendar'
                                 ? <Calendar />
-                                : activeComponent === 'Activities'
-                                    ? <Activities />
-                                    : activeComponent === 'Organize Itinerary'
-                                        ? <OrganizeItinerary />
-                                        : activeComponent === 'View Itinerary'
-                                            ? <ViewItinerary />
-                                            : activeComponent === 'Create Trip'
-                                                ? <CreateTrip setToggle={setToggle}/>
-                                                : <Home />
+                                // : activeComponent === 'Activities'
+                                //     ? <Activities currentTrip={currentTrip} />
+                                //     : activeComponent === 'Organize Itinerary'
+                                //         ? <OrganizeItinerary />
+                                //         : activeComponent === 'View Itinerary'
+                                //             ? <ViewItinerary />
+                                : activeComponent === 'Create Trip'
+                                    ? <CreateTrip setToggle={setToggle} />
+                                    : activeComponent === 'Trip'
+                                        ? <CurrentTrip />
+                                        : <Home />
                             }
                         </div>
                     </main>
