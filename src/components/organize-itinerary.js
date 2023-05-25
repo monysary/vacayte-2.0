@@ -71,88 +71,52 @@ function classNames(...classes) {
 }
 
 export default function OrganizeItinerary({ tripInfo }) {
+    // Get trip date range function
     const tripStartDate = tripInfo?.startDate.split('T')[0]
     const tripEndDate = tripInfo?.endDate.split('T')[0]
-
-    console.log(tripStartDate, tripEndDate);
-
     const [tripDates, setTripDates] = useState([])
     const getDateRange = (start, end) => {
         const dateArr = []
-        for ( let date = new Date(start); date <= new Date(end); date.setDate(date.getDate() + 1)) {
+        for (let date = new Date(start); date <= new Date(end); date.setDate(date.getDate() + 1)) {
             dateArr.push(new Date(date).toISOString().split('T')[0])
         }
         return dateArr;
     }
-    console.log(getDateRange(tripStartDate, tripEndDate));
-    
+    useEffect(() => {
+        setTripDates(
+            getDateRange(tripStartDate, tripEndDate)
+                .map((item, index) => ({
+                    date: item,
+                    isSelected: index === 2 ? true : false
+                }))
+        )
+    }, [tripInfo])
 
     return (
         <div className="pb-6">
             <div className="mt-6 mx-6 lg:grid lg:grid-cols-12 lg:gap-x-16">
-                <div className="mt-10 text-center lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mt-9 xl:col-start-9">
-                    <div className="flex items-center text-gray-900">
-                        <button
-                            type="button"
-                            className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-                        >
-                            <span className="sr-only">Previous month</span>
-                            <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-                        </button>
-                        <div className="flex-auto text-sm font-semibold">January</div>
-                        <button
-                            type="button"
-                            className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-                        >
-                            <span className="sr-only">Next month</span>
-                            <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-                        </button>
+                <div className="mt-10 text-center flex flex-col items-center lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mt-9 xl:col-start-9">
+                    <div className="inline-flex items-center text-gray-900 text-lg font-semibold">
+                        Calendar
                     </div>
-                    <div className="mt-6 grid grid-cols-7 text-xs leading-6 text-gray-500">
-                        <div>M</div>
-                        <div>T</div>
-                        <div>W</div>
-                        <div>T</div>
-                        <div>F</div>
-                        <div>S</div>
-                        <div>S</div>
-                    </div>
-                    <div className="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200">
-                        {days.map((day, dayIdx) => (
+                    <div className="mt-2 flex flex-col gap-0.5 rounded-lg bg-gray-200 text-sm shadow-md ring-1 ring-gray-200 overflow-auto max-h-80 w-full max-w-xs">
+                        {tripDates.map((day) => (
                             <button
                                 key={day.date}
                                 type="button"
                                 className={classNames(
-                                    'py-1.5 hover:bg-gray-100 focus:z-10',
-                                    day.isCurrentMonth ? 'bg-white' : 'bg-gray-50',
-                                    (day.isSelected || day.isToday) && 'font-semibold',
-                                    day.isSelected && 'text-white',
-                                    !day.isSelected && day.isCurrentMonth && !day.isToday && 'text-gray-900',
-                                    !day.isSelected && !day.isCurrentMonth && !day.isToday && 'text-gray-400',
-                                    day.isToday && !day.isSelected && 'text-teal-600',
-                                    dayIdx === 0 && 'rounded-tl-lg',
-                                    dayIdx === 6 && 'rounded-tr-lg',
-                                    dayIdx === days.length - 7 && 'rounded-bl-lg',
-                                    dayIdx === days.length - 1 && 'rounded-br-lg'
+                                    'p-1.5 hover:bg-gray-100 focus:z-10 bg-gray-50 text-gray-900 text-center',
+                                    day.isSelected && 'hover:bg-teal-500 bg-teal-500 font-semibold text-gray-100',
                                 )}
                             >
-                                <time
-                                    dateTime={day.date}
-                                    className={classNames(
-                                        'mx-auto flex h-7 w-7 items-center justify-center rounded-full',
-                                        day.isSelected && day.isToday && 'bg-teal-600',
-                                        day.isSelected && !day.isToday && 'bg-gray-900'
-                                    )}
-                                >
-                                    {day.date.split('-').pop().replace(/^0/, '')}
-                                </time>
+                                {new Date(day.date).toDateString()}
                             </button>
                         ))}
                     </div>
                     <button
                         type="button"
                         onClick={() => console.log(tripDates)}
-                        className="mt-8 w-full rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                        className="mt-8 w-full max-w-xs rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                     >
                         Add event
                     </button>
