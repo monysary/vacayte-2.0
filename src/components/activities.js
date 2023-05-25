@@ -5,7 +5,7 @@ import authService from '@/utils/authService'
 const loaderSectionArr = [1, 2]
 const loaderCardArr = [1, 2, 3, 4, 5]
 
-export default function Activities({ activities }) {
+export default function Activities({ tripInfo }) {
     const [loading, setLoading] = useState(false)
     const [toggle, setToggle] = useState(true)
 
@@ -14,7 +14,7 @@ export default function Activities({ activities }) {
     const fetchYelpData = async (term) => {
         setLoading(true)
         try {
-            const response = await fetch(`/api/yelp?location=${activities?.location}&term=${term}`, {
+            const response = await fetch(`/api/yelp?location=${tripInfo?.location}&term=${term}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': authService.getToken()
@@ -40,21 +40,21 @@ export default function Activities({ activities }) {
     }
     useEffect(() => {
         setYelpActivities([])
-        activities?.activities.map((item) => {
+        tripInfo?.activities.map((item) => {
             fetchYelpData(item.name)
         })
-        if (activities !== undefined) {
+        if (tripInfo !== undefined) {
             fetchSavedList()
         }
 
-    }, [activities])
+    }, [tripInfo])
 
     // Adding Yelp business to activities saved
     const [savedList, setSavedList] = useState([])
     const handleActivitiesSaved = async (name, yelpID) => {
         try {
             if (!savedList.find((item) => item === yelpID)) {
-                const response = await fetch(`/api/trip/userTrip?_id=${activities._id}&name=${name}&yelpID=${yelpID}`, {
+                const response = await fetch(`/api/trip/userTrip?_id=${tripInfo._id}&name=${name}&yelpID=${yelpID}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export default function Activities({ activities }) {
                 const data = await response.json()
 
             } else {
-                const response = await fetch(`/api/trip/userTrip?_id=${activities._id}&name=${name}&yelpID=${yelpID}`, {
+                const response = await fetch(`/api/trip/userTrip?_id=${tripInfo._id}&name=${name}&yelpID=${yelpID}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export default function Activities({ activities }) {
                     }
                 })
                 const data = await response.json()
-            
+
             }
 
         } catch (err) {
@@ -85,7 +85,7 @@ export default function Activities({ activities }) {
     // Fetching list of saved activities
     const fetchSavedList = async () => {
         try {
-            const response = await fetch(`/api/trip/userTrip/savedList?_id=${activities?._id}`, {
+            const response = await fetch(`/api/trip/userTrip/savedList?_id=${tripInfo?._id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': authService.getToken()
@@ -99,7 +99,7 @@ export default function Activities({ activities }) {
         }
     }
     useEffect(() => {
-        if (activities !== undefined) {
+        if (tripInfo !== undefined) {
             fetchSavedList()
         }
 

@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import {
     CalendarIcon,
     ChevronLeftIcon,
@@ -70,11 +70,26 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function OrganizeItinerary() {
+export default function OrganizeItinerary({ tripInfo }) {
+    const tripStartDate = tripInfo?.startDate.split('T')[0]
+    const tripEndDate = tripInfo?.endDate.split('T')[0]
+
+    console.log(tripStartDate, tripEndDate);
+
+    const [tripDates, setTripDates] = useState([])
+    const getDateRange = (start, end) => {
+        const dateArr = []
+        for ( let date = new Date(start); date <= new Date(end); date.setDate(date.getDate() + 1)) {
+            dateArr.push(new Date(date).toISOString().split('T')[0])
+        }
+        return dateArr;
+    }
+    console.log(getDateRange(tripStartDate, tripEndDate));
+    
+
     return (
-        <div className="px-4 sm:px-6 lg:px-8">
-            <h2 className="text-base font-semibold leading-6 text-gray-900">Creating Your Itinerary</h2>
-            <div className="lg:grid lg:grid-cols-12 lg:gap-x-16">
+        <div className="pb-6">
+            <div className="mt-6 mx-6 lg:grid lg:grid-cols-12 lg:gap-x-16">
                 <div className="mt-10 text-center lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mt-9 xl:col-start-9">
                     <div className="flex items-center text-gray-900">
                         <button
@@ -114,7 +129,7 @@ export default function OrganizeItinerary() {
                                     day.isSelected && 'text-white',
                                     !day.isSelected && day.isCurrentMonth && !day.isToday && 'text-gray-900',
                                     !day.isSelected && !day.isCurrentMonth && !day.isToday && 'text-gray-400',
-                                    day.isToday && !day.isSelected && 'text-indigo-600',
+                                    day.isToday && !day.isSelected && 'text-teal-600',
                                     dayIdx === 0 && 'rounded-tl-lg',
                                     dayIdx === 6 && 'rounded-tr-lg',
                                     dayIdx === days.length - 7 && 'rounded-bl-lg',
@@ -125,7 +140,7 @@ export default function OrganizeItinerary() {
                                     dateTime={day.date}
                                     className={classNames(
                                         'mx-auto flex h-7 w-7 items-center justify-center rounded-full',
-                                        day.isSelected && day.isToday && 'bg-indigo-600',
+                                        day.isSelected && day.isToday && 'bg-teal-600',
                                         day.isSelected && !day.isToday && 'bg-gray-900'
                                     )}
                                 >
@@ -136,7 +151,8 @@ export default function OrganizeItinerary() {
                     </div>
                     <button
                         type="button"
-                        className="mt-8 w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        onClick={() => console.log(tripDates)}
+                        className="mt-8 w-full rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                     >
                         Add event
                     </button>

@@ -38,9 +38,7 @@ export default function CurrentTrip({ currentTrip }) {
     }
 
     // Setting up navigation props
-    const [activities, setActivities] = useState()
-    const [organizeItinerary, setOrganizeItinerary] = useState()
-    const [viewItinerary, setViewItinerary] = useState()
+    const [tripInfo, setTripInfo] = useState()
     const fetchUserTrip = async () => {
         try {
             const response = await fetch(`/api/trip/userTrip?_id=${currentTrip}`, {
@@ -50,12 +48,7 @@ export default function CurrentTrip({ currentTrip }) {
                 }
             })
             const data = await response.json()
-
-            setActivities({
-                _id: data._id,
-                location: data.location,
-                activities: data.activities
-            })
+            setTripInfo(data)
 
         } catch (err) {
             console.log(err);
@@ -67,7 +60,7 @@ export default function CurrentTrip({ currentTrip }) {
 
     return (
         <div className="min-h-full">
-            <div className="max-w-7xl">
+            <div className="w-full">
                 <div className="flex h-16 justify-around shadow-md sm:justify-center sm:-my-px sm:space-x-8">
                     {navigation.map((item) => (
                         <button
@@ -97,13 +90,13 @@ export default function CurrentTrip({ currentTrip }) {
 
             <div>
                 <main>
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
                         {/* Your content */}
                         {activeComponent === 'Organize Itinerary'
-                            ? <OrganizeItinerary />
+                            ? <OrganizeItinerary tripInfo={tripInfo} />
                             : activeComponent === 'View Itinerary'
                                 ? <ViewItinerary />
-                                : <Activities activities={activities} />
+                                : <Activities tripInfo={tripInfo} />
                         }
                     </div>
                 </main>
