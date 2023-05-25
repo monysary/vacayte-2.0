@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         switch (req.method) {
             case 'GET':
                 try {
-                    const trip = await Trip.findById(req.query.id)
+                    const trip = await Trip.findById(req.query._id)
                     if (!trip) {
                         return res.status(404).json({ message: 'No trip found' })
                     }
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
 
             case 'POST':
                 try {
-                    const trip = await Trip.findById(req.query.id)
+                    const trip = await Trip.findById(req.query._id)
                     if (!trip) {
                         return res.status(404).json({ message: 'Trip not found' })
                     }
@@ -58,7 +58,7 @@ export default async function handler(req, res) {
 
             case 'DELETE':
                 try {
-                    const trip = await Trip.findById(req.query.id)
+                    const trip = await Trip.findById(req.query._id)
                     if (!trip) {
                         return res.status(404).json({ message: 'Trip not found' })
                     }

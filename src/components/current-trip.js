@@ -43,7 +43,7 @@ export default function CurrentTrip({ currentTrip }) {
     const [viewItinerary, setViewItinerary] = useState()
     const fetchUserTrip = async () => {
         try {
-            const response = await fetch(`/api/trip/userTrip?id=${currentTrip}`, {
+            const response = await fetch(`/api/trip/userTrip?_id=${currentTrip}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': authService.getToken(),

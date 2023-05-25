@@ -53,14 +53,27 @@ export default function Activities({ activities }) {
     const [savedList, setSavedList] = useState([])
     const handleActivitiesSaved = async (name, yelpID) => {
         try {
-            const response = await fetch(`/api/trip/userTrip?id=${activities._id}&name=${name}&yelpID=${yelpID}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': authService.getToken(),
-                }
-            })
-            const data = await response.json()
+            if (!savedList.find((item) => item === yelpID)) {
+                const response = await fetch(`/api/trip/userTrip?_id=${activities._id}&name=${name}&yelpID=${yelpID}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': authService.getToken(),
+                    }
+                })
+                const data = await response.json()
+
+            } else {
+                const response = await fetch(`/api/trip/userTrip?_id=${activities._id}&name=${name}&yelpID=${yelpID}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': authService.getToken(),
+                    }
+                })
+                const data = await response.json()
+            
+            }
 
         } catch (err) {
             console.log(err);
