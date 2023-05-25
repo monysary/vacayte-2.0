@@ -43,13 +43,22 @@ export default function Activities({ activities }) {
         activities?.activities.map((item) => {
             fetchYelpData(item.name)
         })
-        // setLoading(true)
     }, [activities])
 
     // Adding Yelp business to activities saved
-    const addActivitiesSaved = async () => {
+    const handleActivitiesSaved = async (name, yelpID) => {
+
         try {
-            
+            const response = await fetch(`/api/trip/userTrip?id=${activities._id}&name=${name}&yelpID=${yelpID}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': authService.getToken(),
+                }
+            })
+            const data = await response.json()
+            console.log(data);
+
         } catch (err) {
             console.log(err);
         }
@@ -120,10 +129,13 @@ export default function Activities({ activities }) {
                             <div className="flex">
                                 <div className="flex w-0 flex-1">
                                     <button
-                                        onClick={addActivitiesSaved}
+                                        onClick={() => handleActivitiesSaved(item.name, business.id)}
                                         className="inline-flex flex-1 items-center justify-center gap-x-3 rounded-bl-lg py-2 text-sm font-semibold text-gray-900 hover:bg-gray-100"
                                     >
-                                        <HeartIcon className="h-5 w-5 stroke-2 stroke-gray-400 fill-none" aria-hidden="true" />
+                                        <HeartIcon
+                                            className="h-5 w-5 stroke-2 stroke-gray-400 fill-none"
+                                            aria-hidden="true"
+                                        />
                                         Save
                                     </button>
                                 </div>

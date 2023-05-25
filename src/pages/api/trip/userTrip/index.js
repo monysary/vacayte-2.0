@@ -30,18 +30,23 @@ export default async function handler(req, res) {
 
             case 'POST':
                 try {
-                    const trip = await Trip.findById(req.body._id)
+                    const trip = await Trip.findById(req.query.id)
                     if (!trip) {
                         return res.status(404).json({ message: 'Trip not found' })
                     }
 
-                    const activity = await trip.activities.find((item) => item.name === req.body.name)
+                    const activity = await trip.activities.find((item) => item.name === req.query.name)
                     if (!activity) {
                         return res.status(404).json({ message: 'Activity not found' })
                     }
 
-                    activity.saved.push({ businessID: req.body.yelpID })
-                    await trip.save()
+                    const alreadySaved = activity.saved.find((item) => item.businessID === req.query.yelpID)
+                    if (!alreadySaved) {
+                        activity.saved.push({ businessID: req.query.yelpID })
+                        await trip.save()
+                    } else {
+                        return res.status(400).json({ message: 'Business already saved' })
+                    }
 
                     res.status(200).json(trip)
 
@@ -53,7 +58,7 @@ export default async function handler(req, res) {
 
             case 'DELETE':
                 try {
-                    const trip = await Trip.findById(req.query._id)
+                    const trip = await Trip.findById(req.query.id)
                     if (!trip) {
                         return res.status(404).json({ message: 'Trip not found' })
                     }
@@ -73,7 +78,6 @@ export default async function handler(req, res) {
                     console.log(err);
                     res.status(500).json({ message: 'Internal Server Error' })
                 }
-
                 break;
 
             default:
