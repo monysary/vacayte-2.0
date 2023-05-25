@@ -6,11 +6,11 @@ const loaderSectionArr = [1, 2]
 const loaderCardArr = [1, 2, 3, 4, 5]
 
 export default function Activities({ activities }) {
-    // Loading state
     const [loading, setLoading] = useState(false)
+    const [toggle, setToggle] = useState(true)
 
     // Fetch Yelp data
-    const [tripActivities, setTripActivities] = useState([])
+    const [yelpActivities, setYelpActivities] = useState([])
     const fetchYelpData = async (term) => {
         setLoading(true)
         try {
@@ -22,7 +22,7 @@ export default function Activities({ activities }) {
             })
             const data = await response.json()
 
-            setTripActivities((prev) => {
+            setYelpActivities((prev) => {
                 if (!prev.find((object) => object.name === term)) {
                     return ([...prev, {
                         name: term,
@@ -39,15 +39,19 @@ export default function Activities({ activities }) {
         }
     }
     useEffect(() => {
-        setTripActivities([])
+        setYelpActivities([])
         activities?.activities.map((item) => {
             fetchYelpData(item.name)
         })
+        if (activities !== undefined) {
+            fetchSavedList()
+        }
+
     }, [activities])
 
     // Adding Yelp business to activities saved
+    const [savedList, setSavedList] = useState([])
     const handleActivitiesSaved = async (name, yelpID) => {
-
         try {
             const response = await fetch(`/api/trip/userTrip?id=${activities._id}&name=${name}&yelpID=${yelpID}`, {
                 method: 'POST',
@@ -57,12 +61,36 @@ export default function Activities({ activities }) {
                 }
             })
             const data = await response.json()
-            console.log(data);
+
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setToggle((prev) => !prev)
+        }
+    }
+
+    // Fetching list of saved activities
+    const fetchSavedList = async () => {
+        try {
+            const response = await fetch(`/api/trip/userTrip/savedList?_id=${activities?._id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': authService.getToken()
+                }
+            })
+            const data = await response.json()
+            setSavedList(data)
 
         } catch (err) {
             console.log(err);
         }
     }
+    useEffect(() => {
+        if (activities !== undefined) {
+            fetchSavedList()
+        }
+
+    }, [toggle])
 
     return (loading
         ? loaderSectionArr.map((item) => (
@@ -97,7 +125,7 @@ export default function Activities({ activities }) {
                 </div>
             </div>
         ))
-        : tripActivities.map((item) => (
+        : yelpActivities.map((item) => (
             <div key={item.name} className='pb-6'>
                 <div className="md:flex md:items-center md:justify-between border-b border-gray-900/10 pb-1 mt-6">
                     <h2 className="text-2xl font-bold leading-7 text-teal-700 sm:truncate sm:text-3xl sm:tracking-tight">
@@ -133,10 +161,16 @@ export default function Activities({ activities }) {
                                         className="inline-flex flex-1 items-center justify-center gap-x-3 rounded-bl-lg py-2 text-sm font-semibold text-gray-900 hover:bg-gray-100"
                                     >
                                         <HeartIcon
-                                            className="h-5 w-5 stroke-2 stroke-gray-400 fill-none"
+                                            className={`h-5 w-5 stroke-2 ${!savedList?.find((item) => item === business.id)
+                                                ? 'stroke-gray-400 fill-none'
+                                                : 'stroke-teal-500 fill-teal-500'
+                                                }`}
                                             aria-hidden="true"
                                         />
-                                        Save
+                                        {!savedList?.find((item) => item === business.id)
+                                            ? 'Save'
+                                            : 'Saved'
+                                        }
                                     </button>
                                 </div>
                             </div>

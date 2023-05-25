@@ -16,6 +16,7 @@ function classNames(...classes) {
 }
 
 export default function CurrentTrip({ currentTrip }) {
+
     // Handle navigation tab
     const [navigation, setNavigation] = useState([
         { name: 'Activities', icon: BuildingStorefrontIcon, current: true },
@@ -67,7 +68,7 @@ export default function CurrentTrip({ currentTrip }) {
     return (
         <div className="min-h-full">
             <div className="max-w-7xl">
-                <div className="flex h-16 justify-around shadow-md sm:justify-start sm:-my-px sm:space-x-8">
+                <div className="flex h-16 justify-around shadow-md sm:justify-center sm:-my-px sm:space-x-8">
                     {navigation.map((item) => (
                         <button
                             key={item.name}
