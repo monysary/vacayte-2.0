@@ -41,7 +41,6 @@ export default async function handler(req, res) {
                     }
 
                     activity.saved.push({ businessID: req.body.yelpID })
-
                     await trip.save()
 
                     res.status(200).json(trip)
