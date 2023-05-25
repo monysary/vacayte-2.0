@@ -29,7 +29,8 @@ const tripSchema = new Schema(
             saved: [{
                 businessID: {
                     type: String,
-                    trim: true
+                    trim: true,
+                    unique: true
                 },
             }]
         }],

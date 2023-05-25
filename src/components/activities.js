@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { HeartIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid'
+import { HeartIcon } from '@heroicons/react/20/solid'
 import authService from '@/utils/authService'
 
-const forLoader = [1, 2, 3, 4, 5]
+const loaderSectionArr = [1, 2]
+const loaderCardArr = [1, 2, 3, 4, 5]
 
 export default function Activities({ activities }) {
     // Loading state
@@ -45,37 +46,48 @@ export default function Activities({ activities }) {
         // setLoading(true)
     }, [activities])
 
+    // Adding Yelp business to activities saved
+    const addActivitiesSaved = async () => {
+        try {
+            
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (loading
-        ? <div className='pb-6 animate-pulse'>
-            <div className='md:flex md:items-center md:justify-between border-b border-gray-900/10 pb-1 mt-6'>
-                <div className='h-6 w-40 bg-slate-200 rounded-full'></div>
-            </div>
-            <div className='flex flex-row flex-nowrap items-stretch gap-4 overflow-x-auto p-2'>
-                {forLoader.map((item) => (
-                    <div
-                        key={item}
-                        className='flex flex-col justify-between shadow-md divide-y divide-gray-200 rounded-lg bg-white border border-blue-200 text-center'
-                    >
-                        <div className='flex flex-col p-3'>
-                            <div className='w-[180px] max-w-none bg-slate-200 aspect-square rounded-xl'></div>
-                            <div className='flex justify-between items-start'>
-                                <div>
-                                    <div className='mt-2 h-4 w-32 bg-slate-200 rounded-full'></div>
-                                    <div className='mt-2 h-4 w-24 bg-slate-200 rounded-full'></div>
+        ? loaderSectionArr.map((item) => (
+            <div key={item} className='pb-6 animate-pulse'>
+                <div className='md:flex md:items-center md:justify-between border-b border-gray-900/10 pb-1 mt-6'>
+                    <div className='h-6 w-40 bg-slate-200 rounded-full'></div>
+                </div>
+                <div className='flex flex-row flex-nowrap items-stretch gap-4 p-2'>
+                    {loaderCardArr.map((item) => (
+                        <div
+                            key={item}
+                            className='flex flex-col justify-between shadow-md divide-y divide-gray-200 rounded-lg bg-white border border-blue-200 text-center'
+                        >
+                            <div className='flex flex-col p-3'>
+                                <div className='w-[180px] max-w-none bg-slate-200 aspect-square rounded-xl'></div>
+                                <div className='flex justify-between items-start'>
+                                    <div>
+                                        <div className='mt-2 h-4 w-32 bg-slate-200 rounded-full'></div>
+                                        <div className='mt-2 h-4 w-24 bg-slate-200 rounded-full'></div>
+                                    </div>
+                                    <div className='mt-2 h-4 w-8 bg-slate-200 rounded-full'></div>
                                 </div>
-                                <div className='mt-2 h-4 w-8 bg-slate-200 rounded-full'></div>
+                                <div className='mt-2 flex flex-grow flex-col justify-between'>
+                                    <div className='h-3 w-32 bg-slate-200 rounded-full'></div>
+                                </div>
                             </div>
-                            <div className='mt-2 flex flex-grow flex-col justify-between'>
-                                <div className='h-3 w-32 bg-slate-200 rounded-full'></div>
+                            <div className='flex justify-center flex-1 p-3'>
+                                <div className='h-5 w-20 bg-slate-200 rounded-full'></div>
                             </div>
                         </div>
-                        <div className='flex justify-center flex-1 p-3'>
-                            <div className='h-5 w-20 bg-slate-200 rounded-full'></div>
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-        </div>
+        ))
         : tripActivities.map((item) => (
             <div key={item.name} className='pb-6'>
                 <div className="md:flex md:items-center md:justify-between border-b border-gray-900/10 pb-1 mt-6">
@@ -108,7 +120,8 @@ export default function Activities({ activities }) {
                             <div className="flex">
                                 <div className="flex w-0 flex-1">
                                     <button
-                                        className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-2 text-sm font-semibold text-gray-900"
+                                        onClick={addActivitiesSaved}
+                                        className="inline-flex flex-1 items-center justify-center gap-x-3 rounded-bl-lg py-2 text-sm font-semibold text-gray-900 hover:bg-gray-100"
                                     >
                                         <HeartIcon className="h-5 w-5 stroke-2 stroke-gray-400 fill-none" aria-hidden="true" />
                                         Save
