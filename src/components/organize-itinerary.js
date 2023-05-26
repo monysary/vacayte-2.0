@@ -30,7 +30,11 @@ export default function OrganizeItinerary({ tripInfo }) {
     const [tripDates, setTripDates] = useState([])
     const getDateRange = (start, end) => {
         const dateArr = []
-        for (let date = new Date(start); date <= new Date(end); date.setDate(date.getDate() + 1)) {
+        for (
+            let date = new Date(start);
+            date <= new Date(end);
+            date.setDate(date.getDate() + 1)
+        ) {
             dateArr.push(new Date(date).toISOString().split('T')[0])
         }
         return dateArr;
@@ -38,14 +42,27 @@ export default function OrganizeItinerary({ tripInfo }) {
     useEffect(() => {
         setTripDates(
             getDateRange(tripStartDate, tripEndDate)
-                .map((item, index) => ({
+                .map((item) => ({
                     date: item,
-                    isSelected: index === 2 ? true : false
+                    isSelected: false
                 }))
         )
     }, [tripInfo])
 
-    
+    // Handle selecting dates
+    const [selectedDate, setSelectedDate] = useState()
+    const handleSelectDates = (event) => {
+        setTripDates(
+            tripDates.map((item) => {
+                if (new Date(item.date).toUTCString().split(' 00:00:00 ')[0] === event.target.innerHTML) {
+                    setSelectedDate(item.date)
+                    return { ...item, isSelected: true }
+                } else {
+                    return { ...item, isSelected: false }
+                }
+            })
+        )
+    }
 
     return (
         <div className="pb-6">
@@ -59,18 +76,19 @@ export default function OrganizeItinerary({ tripInfo }) {
                             <button
                                 key={day.date}
                                 type="button"
+                                onClick={handleSelectDates}
                                 className={classNames(
                                     'p-1.5 hover:bg-gray-100 focus:z-10 bg-gray-50 text-gray-900 text-center',
                                     day.isSelected && 'hover:bg-teal-500 bg-teal-500 font-semibold text-zinc-100',
                                 )}
                             >
-                                {new Date(day.date).toDateString()}
+                                {new Date(day.date).toUTCString().split(' 00:00:00 ')[0]}
                             </button>
                         ))}
                     </div>
                     <button
                         type="button"
-                        onClick={() => console.log(tripDates)}
+                        onClick={() => console.log(selectedDate)}
                         className="mt-8 w-full sm:max-w-xs rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                     >
                         Add event

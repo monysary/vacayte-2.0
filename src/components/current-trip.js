@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import {
-    BuildingStorefrontIcon,
-    BookOpenIcon,
-    NewspaperIcon,
+    FaceSmileIcon,
+    WalletIcon,
+    TableCellsIcon,
 } from '@heroicons/react/24/outline'
 
 import Activities from './activities';
@@ -19,9 +19,9 @@ export default function CurrentTrip({ currentTrip }) {
 
     // Handle navigation tab
     const [navigation, setNavigation] = useState([
-        { name: 'Activities', icon: BuildingStorefrontIcon, current: true },
-        { name: 'Organize Itinerary', icon: BookOpenIcon, current: false },
-        { name: 'View Itinerary', icon: NewspaperIcon, current: false },
+        { name: 'Activities', icon: FaceSmileIcon, current: true },
+        { name: 'Organize Itinerary', icon: WalletIcon, current: false },
+        { name: 'View Itinerary', icon: TableCellsIcon, current: false },
     ])
     const [activeComponent, setActiveComponent] = useState('Activities')
     const handleNavigation = (name) => {
@@ -68,7 +68,7 @@ export default function CurrentTrip({ currentTrip }) {
                             className={classNames(
                                 item.current
                                     ? 'border-teal-500 text-gray-900'
-                                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
+                                    : 'border-transparent text-gray-500 hover:border-gray-300',
                                 'inline-flex items-center sm:gap-2 border-b-2 px-4 pt-1 text-[0] sm:text-sm font-medium'
                             )}
                             aria-current={item.current ? 'page' : undefined}
@@ -78,7 +78,7 @@ export default function CurrentTrip({ currentTrip }) {
                                 className={classNames(
                                     item.current
                                         ? 'border-teal-500 text-gray-900'
-                                        : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
+                                        : 'border-transparent text-gray-500',
                                     'h-6 w-6 shrink-0'
                                 )}
                             />
