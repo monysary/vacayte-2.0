@@ -11,15 +11,14 @@ export default async function handler(req, res) {
                 const users = await User.find({})
 
                 if (!users) {
-                    res.status(500).json({ message: 'There are no users' })
-                    return
+                    return res.status(404).json({ message: 'There are no users' })
                 }
 
                 res.status(200).json(users)
 
             } catch (err) {
                 console.log(err);
-                res.status(400).json({ message: 'Invalid request' })
+                res.status(500).json({ message: 'Invalid request' })
             }
             break;
 
@@ -28,26 +27,23 @@ export default async function handler(req, res) {
                 const user = await User.findOne({
                     username: req.body.username,
                 })
-
                 if (!user) {
-                    res.status(500).json({ message: 'Incorrect username' })
-                    return
+                    return res.status(400).json({ message: 'Username or password is incorrect' })
                 }
 
-                const password = user.isCorrectPassword(req.body.password)
+                const password = await user.isCorrectPassword(req.body.password)
 
                 if (!password) {
-                    res.status(500).json({ message: 'Incorrect password' })
-                    return
+                    return res.status(400).json({ message: 'Username or password is incorrect' })
                 }
-
+                
                 const token = signToken(user);
 
                 res.status(200).json({ token, user })
 
             } catch (err) {
                 console.log(err);
-                res.status(400).json({ message: 'Invalid request' })
+                res.status(500).json({ message: 'Invalid request' })
             }
             break;
 

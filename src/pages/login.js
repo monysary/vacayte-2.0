@@ -5,6 +5,12 @@ import Signup from "@/components/signup"
 import authService from '@/utils/authService'
 
 export default function Login() {
+    useEffect(() => {
+        if (authService.loggedIn() && !authService.tokenExpired()) {
+            window.location.assign('/dashboard')
+        }
+    }, [])
+    
     // Toggle between login and signup form
     const [toggleHidden, setToggleHidden] = useState(true)
 
@@ -19,6 +25,7 @@ export default function Login() {
 
     // POST request to log in user
     const [loading, setLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
     const userLogin = async (event) => {
         event.preventDefault();
         setLoading(true)
@@ -31,6 +38,9 @@ export default function Login() {
                 body: JSON.stringify(loginForm)
             })
             const data = await response.json()
+            if (data.message) {
+                setErrorMessage(data.message)
+            }
 
             authService.login(data.token)
 
@@ -100,6 +110,9 @@ export default function Login() {
                                             : 'Sign in'
                                         }
                                     </button>
+                                    <label className={`text-xs text-red-500 ${!errorMessage && 'hidden'}`}>
+                                        {errorMessage}
+                                    </label>
                                 </div>
                             </form>
                         </div>

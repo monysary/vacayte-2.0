@@ -1,4 +1,4 @@
-const { Schema, model, models, Types } = require('mongoose');
+const { Schema, model, models } = require('mongoose');
 
 const tripSchema = new Schema(
     {
@@ -30,9 +30,12 @@ const tripSchema = new Schema(
                 businessID: {
                     type: String,
                     trim: true,
-                    unique: true
                 },
             }]
+        }],
+        itinerary: [{
+            type: Schema.Types.ObjectId,
+            ref: 'vacayte2Itinerary'
         }],
         owner: {
             type: Schema.Types.ObjectId,

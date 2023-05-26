@@ -111,11 +111,24 @@ export default function CreateTrip({ setToggle }) {
             console.log(err);
         } finally {
             setLoading(false)
+            setTripForm({
+                name: '',
+                location: '',
+                startDate: '',
+                endDate: '',
+                activity: '',
+                activities: [],
+            })
+            setLocationProps({
+                city: '',
+                state: '',
+                country: '',
+            })
         }
     }
 
     return (
-        <div className='space-y-8 px-4 sm:px-6 lg:px-8'>
+        <div className='space-y-8 px-4 pb-6 sm:px-6 lg:px-8'>
             <div className="md:flex md:items-center md:justify-between border-b border-gray-900/10 py-4">
                 <div className="min-w-0 flex-1">
                     <h2 className="text-2xl font-bold leading-7 text-teal-700 sm:truncate sm:text-3xl sm:tracking-tight">

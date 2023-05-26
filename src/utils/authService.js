@@ -7,7 +7,9 @@ class AuthService {
 
     loggedIn() {
         const token = this.getToken();
-        return token ? true : false;
+        if (token !== undefined) {
+            return token ? true : false;
+        }
     }
 
     getToken() {
@@ -15,8 +17,10 @@ class AuthService {
     }
 
     login(token) {
-        localStorage.setItem("auth_token", token);
-        window.location.assign("/dashboard");
+        if (token !== undefined) {
+            localStorage.setItem("auth_token", token);
+            window.location.assign("/dashboard");
+        }
     }
 
     logout() {
