@@ -7,7 +7,7 @@ module.exports = {
             expiresIn: process.env.EXPIRE,
         })
     },
-    authMiddleware(req, res, next) {
+    authMiddleware: (req, res, next) => {
         const token = req.headers.authorization
 
         if (!token) {

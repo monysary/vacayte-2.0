@@ -111,19 +111,19 @@ export default function CreateTrip({ setToggle }) {
             console.log(err);
         } finally {
             setLoading(false)
-            setTripForm({
-                name: '',
-                location: '',
-                startDate: '',
-                endDate: '',
-                activity: '',
-                activities: [],
-            })
-            setLocationProps({
-                city: '',
-                state: '',
-                country: '',
-            })
+            // setTripForm({
+            //     name: '',
+            //     location: '',
+            //     startDate: '',
+            //     endDate: '',
+            //     activity: '',
+            //     activities: [],
+            // })
+            // setLocationProps({
+            //     city: '',
+            //     state: '',
+            //     country: '',
+            // })
         }
     }
 

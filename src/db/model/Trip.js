@@ -33,10 +33,11 @@ const tripSchema = new Schema(
                 },
             }]
         }],
-        itinerary: [{
+        itinerary: {
             type: Schema.Types.ObjectId,
+            required: true,
             ref: 'vacayte2Itinerary'
-        }],
+        },
         owner: {
             type: Schema.Types.ObjectId,
             required: true,

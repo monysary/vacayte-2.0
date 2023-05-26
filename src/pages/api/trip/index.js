@@ -1,6 +1,7 @@
 import dbConnect from "@/db/config/connections";
-import { User, Trip } from "@/db/model";
+import { User, Trip, Itinerary } from "@/db/model";
 import { authMiddleware } from "@/utils/auth";
+import { getDateRange } from "@/utils/helpers";
 
 export const config = {
     api: {
@@ -30,11 +31,32 @@ export default async function handler(req, res) {
 
             case 'POST':
                 try {
-                    const newTrip = await Trip.create({ ...req.body, owner: req.user._id })
-                    if (!newTrip) {
-                        return res.status(400).json({ message: 'Incorrect request' })
+                    const newItinerary = await Itinerary.create({})
+                    if (!newItinerary) {
+                        return res.status(500).json({ message: 'Internal Server Error' })
                     }
-                    await User.findByIdAndUpdate(req.user._id, { $push: { trips: newTrip._id } })
+
+                    const newTrip = await Trip.create({
+                        ...req.body,
+                        itinerary: newItinerary._id,
+                        owner: req.user._id,
+                    })
+                    if (!newTrip) {
+                        return res.status(500).json({ message: 'Internal Server Error' })
+                    }
+
+                    const tripStartDate = newTrip.startDate
+                    const tripEndDate = newTrip.endDate
+                    const dateRange = getDateRange(tripStartDate, tripEndDate)
+                    dateRange.map((date) => {
+                        newItinerary.itinerary.push({ date, dailyActivities: [] })
+                    })
+                    await newItinerary.save()
+
+                    const updatedUser = await User.findByIdAndUpdate(req.user._id, { $push: { trips: newTrip._id } })
+                    if (!updatedUser) {
+                        return res.status(500).json({ message: 'Internal Server Error' })
+                    }
 
                     res.status(200).json(newTrip)
 

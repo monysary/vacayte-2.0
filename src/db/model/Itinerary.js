@@ -1,16 +1,20 @@
 const { Schema, model, models } = require('mongoose');
 
-const itinerarySchema = new Schema (
+const itinerarySchema = new Schema(
     {
-        itinerary:[{
+        itinerary: [{
             date: {
                 type: Date,
                 required: true
             },
             dailyActivities: [{
-                type: String,
-                trim: true,
-                unique: true
+                businessID: {
+                    type: String,
+                    trim: true,
+                },
+                time: {
+                    type: Date,
+                },
             }]
         }]
     }
