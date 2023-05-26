@@ -7,6 +7,7 @@ import {
 import { Menu, Transition } from '@headlessui/react'
 
 import { getDateRange } from '@/utils/helpers'
+import authService from '@/utils/authService'
 
 const meetings = [
     {
@@ -38,6 +39,8 @@ export default function OrganizeItinerary({ tripInfo }) {
                     isSelected: false
                 }))
         )
+        fetchItinerary()
+
     }, [tripInfo])
 
     // Handle selecting dates
@@ -53,6 +56,24 @@ export default function OrganizeItinerary({ tripInfo }) {
                 }
             })
         )
+    }
+
+    // Get trip itinerary and daily activities
+    const [dailyActivities, setDailyActivities] = useState()
+    const fetchItinerary = async () => {
+        try {
+            const response = await fetch(`/api/trip/userTrip/itinerary?_id=${tripInfo._id}`, {
+                headers: {
+                    'Authorization': authService.getToken()
+                }
+            })
+            const data = await response.json()
+            setDailyActivities(data.itinerary)
+            console.log(new Date(data.itinerary[0].date).toUTCString().split(' 00:00:00 ')[0]);
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
