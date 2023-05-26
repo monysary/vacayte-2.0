@@ -15,7 +15,17 @@ export default async function handler(req, res) {
         switch (req.method) {
             case 'GET':
                 try {
+                    const trip = await Trip.findById(req.body._id)
+                    if (!trip) {
+                        return res.status(404).json({ message: 'Trip not found' })
+                    }
 
+                    const itinerary = await Itinerary.findById(trip.itinerary)
+                    if (!itinerary) {
+                        return res.status(500).json({ message: 'Internal Server Error' })
+                    }
+
+                    res.status(200).json(itinerary)
 
                 } catch (err) {
                     console.log(err);
