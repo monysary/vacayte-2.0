@@ -4,7 +4,12 @@ import {
     EllipsisHorizontalIcon,
     MapPinIcon,
 } from '@heroicons/react/20/solid'
-import { Menu, Transition } from '@headlessui/react'
+import { CheckIcon } from '@heroicons/react/24/outline'
+import {
+    Menu,
+    Dialog,
+    Transition
+} from '@headlessui/react'
 
 import { getDateRange } from '@/utils/helpers'
 import authService from '@/utils/authService'
@@ -20,6 +25,26 @@ const meetings = [
             'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         location: 'Starbucks',
     },
+    {
+        id: 2,
+        date: 'January 10th, 2022',
+        time: '5:00 PM',
+        datetime: '2022-01-10T17:00',
+        name: 'Leslie Alexander',
+        imageUrl:
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        location: 'Starbucks',
+    },
+    {
+        id: 3,
+        date: 'January 10th, 2022',
+        time: '5:00 PM',
+        datetime: '2022-01-10T17:00',
+        name: 'Leslie Alexander',
+        imageUrl:
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        location: 'Starbucks',
+    },
 ]
 
 function classNames(...classes) {
@@ -27,6 +52,12 @@ function classNames(...classes) {
 }
 
 export default function OrganizeItinerary({ tripInfo }) {
+    // Handle modal
+    const [open, setOpen] = useState(false)
+    const handleModal = () => {
+        setOpen(!open)
+    }
+
     // Get trip date range function
     const tripStartDate = tripInfo?.startDate.split('T')[0]
     const tripEndDate = tripInfo?.endDate.split('T')[0]
@@ -69,7 +100,6 @@ export default function OrganizeItinerary({ tripInfo }) {
             })
             const data = await response.json()
             setDailyActivities(data.itinerary)
-            console.log(new Date(data.itinerary[0].date).toUTCString().split(' 00:00:00 ')[0]);
 
         } catch (err) {
             console.log(err);
@@ -100,7 +130,7 @@ export default function OrganizeItinerary({ tripInfo }) {
                     </div>
                     <button
                         type="button"
-                        onClick={() => console.log(selectedDate)}
+                        onClick={handleModal}
                         className="mt-8 w-full sm:max-w-xs rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                     >
                         Add event
@@ -186,6 +216,43 @@ export default function OrganizeItinerary({ tripInfo }) {
                     ))}
                 </ol>
             </div>
+
+            {/* Add event modal */}
+            <Transition.Root show={open} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={setOpen}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 z-10 overflow-y-auto">
+                        <div className="flex min-h-full items-end justify-center p-4 lg:ml-56 text-center items-center sm:p-0">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                            >
+                                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-xl sm:p-6">
+                                    <div>
+                                        Hello
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition.Root>
         </div>
     )
 }
