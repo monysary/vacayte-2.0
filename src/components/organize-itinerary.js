@@ -30,17 +30,6 @@ export default function OrganizeItinerary({ tripInfo }) {
     const tripStartDate = tripInfo?.startDate.split('T')[0]
     const tripEndDate = tripInfo?.endDate.split('T')[0]
     const [tripDates, setTripDates] = useState([])
-    // const getDateRange = (start, end) => {
-    //     const dateArr = []
-    //     for (
-    //         let date = new Date(start);
-    //         date <= new Date(end);
-    //         date.setDate(date.getDate() + 1)
-    //     ) {
-    //         dateArr.push(new Date(date).toISOString().split('T')[0])
-    //     }
-    //     return dateArr;
-    // }
     useEffect(() => {
         setTripDates(
             getDateRange(tripStartDate, tripEndDate)
