@@ -52,11 +52,6 @@ function classNames(...classes) {
 }
 
 export default function OrganizeItinerary({ tripInfo }) {
-    // Handle modal
-    const [open, setOpen] = useState(false)
-    const handleModal = () => {
-        setOpen(!open)
-    }
 
     // Get trip date range function
     const tripStartDate = tripInfo?.startDate.split('T')[0]
@@ -71,6 +66,14 @@ export default function OrganizeItinerary({ tripInfo }) {
                 }))
         )
         fetchItinerary()
+        setNavigation(
+            tripInfo.activities.map((item, index) => {
+                return ({
+                    name: item.name,
+                    current: index === 0 ? true : false
+                })
+            })
+        )
 
     }, [tripInfo])
 
@@ -106,6 +109,28 @@ export default function OrganizeItinerary({ tripInfo }) {
         }
     }
 
+    // Handle modal
+    const [open, setOpen] = useState(false)
+    const [navigation, setNavigation] = useState([])
+    const [activeComponent, setActiveComponent] = useState()
+    const handleModal = () => {
+        setOpen(!open)
+        setActiveComponent(navigation[0].name)
+        console.log(navigation);
+    }
+    const handleNavigation = (name) => {
+        setNavigation(
+            navigation.map((item) => {
+                if (item.name === name) {
+                    setActiveComponent(item.name)
+                    return { ...item, current: true }
+                } else {
+                    return { ...item, current: false }
+                }
+            })
+        )
+    }
+
     return (
         <div className="pb-6">
             <div className="mt-6 lg:grid lg:grid-cols-12 lg:gap-x-16">
@@ -133,7 +158,7 @@ export default function OrganizeItinerary({ tripInfo }) {
                         onClick={handleModal}
                         className="mt-8 w-full sm:max-w-xs rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                     >
-                        Add event
+                        View Saved
                     </button>
                 </div>
                 <ol className="mt-4 divide-y divide-gray-100 text-sm leading-6 lg:col-span-7 xl:col-span-8">
@@ -233,7 +258,7 @@ export default function OrganizeItinerary({ tripInfo }) {
                     </Transition.Child>
 
                     <div className="fixed inset-0 z-10 overflow-y-auto">
-                        <div className="flex min-h-full items-end justify-center p-4 lg:ml-56 text-center items-center sm:p-0">
+                        <div className="flex h-full items-end justify-center p-4 lg:ml-56 text-center items-center sm:p-0">
                             <Transition.Child
                                 as={Fragment}
                                 enter="ease-out duration-300"
@@ -243,9 +268,55 @@ export default function OrganizeItinerary({ tripInfo }) {
                                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                             >
-                                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-xl sm:p-6">
-                                    <div>
-                                        Hello
+                                <Dialog.Panel className="relative transform overflow-y-auto h-3/4 rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-xl">
+                                    <div className="min-h-full">
+                                        <div className="w-full mt-2 shadow-md">
+                                            <div className="flex overflow-x-auto h-12 sm:space-x-8">
+                                                {navigation.map((item) => (
+                                                    <button
+                                                        key={item.name}
+                                                        className={classNames(
+                                                            item.current
+                                                                ? 'border-teal-500 text-gray-900'
+                                                                : 'border-transparent text-gray-500 hover:border-gray-300',
+                                                            'inline-flex items-center sm:gap-2 border-b-2 px-4 pt-1 text-lg font-medium'
+                                                        )}
+                                                        aria-current={item.current ? 'page' : undefined}
+                                                        onClick={() => handleNavigation(item.name)}
+                                                    >
+                                                        {item.name}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <main className='my-4 px-2 sm:px-4 divide-y-2'>
+                                            <div className='flex flex-nowrap gap-4 items-start py-2'>
+                                                <img src={meetings[0].imageUrl} alt="" className="w-32 aspect-square rounded shrink" />
+                                                <div className='grow flex flex-col gap-2'>
+                                                    <div className='flex flex-nowrap justify-between items-start'>
+                                                        <a
+                                                            href='https://www.yelp.com'
+                                                            target='_blank'
+                                                            className='font-semibold text-lg text-gray-900 hover:underline'
+                                                        >
+                                                            Business Name
+                                                        </a>
+                                                        <div className="whitespace-nowrap rounded-full mt-1 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                                            Rating ★ | 562
+                                                        </div>
+                                                    </div>
+                                                    <div className='flex flex-nowrap justify-between items-start'>
+                                                        <p className='text-xs text-gray-900'>
+                                                            Category | Food | Something | Other
+                                                        </p>
+                                                        <p className='text-xs text-gray-900 font-semibold'>
+                                                            $$$
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </main>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

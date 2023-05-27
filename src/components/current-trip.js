@@ -61,7 +61,7 @@ export default function CurrentTrip({ currentTrip }) {
     return (
         <div className="min-h-full">
             <div className="w-full">
-                <div className="flex h-16 justify-around shadow-md sm:justify-center sm:-my-px sm:space-x-8">
+                <div className="flex h-16 justify-around shadow-md sm:justify-center sm:space-x-8">
                     {navigation.map((item) => (
                         <button
                             key={item.name}
