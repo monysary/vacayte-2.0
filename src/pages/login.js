@@ -10,7 +10,7 @@ export default function Login() {
             window.location.assign('/dashboard')
         }
     }, [])
-    
+
     // Toggle between login and signup form
     const [toggleHidden, setToggleHidden] = useState(true)
 
@@ -51,6 +51,16 @@ export default function Login() {
         }
 
     }
+
+    // Disabled sign in button
+    const [disableLogin, setDisableLogin] = useState(true)
+    useEffect(() => {
+        if (loginForm.username === '' || loginForm.password === '') {
+            setDisableLogin(true)
+        } else {
+            setDisableLogin(false)
+        }
+    }, [loginForm])
 
     return (
         <div className="flex min-h-full flex-1">
@@ -99,8 +109,12 @@ export default function Login() {
 
                                 <div>
                                     <button
-                                        className='flex w-full justify-center items-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm bg-teal-600 hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
+                                        className={`flex w-full justify-center items-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 ${disableLogin
+                                            ? 'bg-gray-400'
+                                            : 'bg-teal-600 hover:bg-teal-500'
+                                            }`}
                                         type="submit"
+                                        disabled={disableLogin}
                                     >
                                         {loading
                                             ? <svg className='animate-spin -ml-1 mr-3 h-5 w-5 text-white' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

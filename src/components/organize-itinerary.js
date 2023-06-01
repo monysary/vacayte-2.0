@@ -4,7 +4,7 @@ import {
     EllipsisHorizontalIcon,
     MapPinIcon,
 } from '@heroicons/react/20/solid'
-import { CheckIcon } from '@heroicons/react/24/outline'
+import { CheckIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import {
     Menu,
     Dialog,
@@ -291,27 +291,38 @@ export default function OrganizeItinerary({ tripInfo }) {
                                         </div>
 
                                         <main className='my-4 px-2 sm:px-4 divide-y-2'>
-                                            <div className='flex flex-nowrap gap-4 items-start py-2'>
-                                                <img src={meetings[0].imageUrl} alt="" className="w-32 aspect-square rounded shrink" />
-                                                <div className='grow flex flex-col gap-2'>
-                                                    <div className='flex flex-nowrap justify-between items-start'>
-                                                        <a
-                                                            href='https://www.yelp.com'
-                                                            target='_blank'
-                                                            className='font-semibold text-lg text-gray-900 hover:underline'
-                                                        >
-                                                            Business Name
-                                                        </a>
-                                                        <div className="whitespace-nowrap rounded-full mt-1 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                                            Rating ★ | 562
+                                            <div className='flex flex-nowrap gap-4 items-stretch py-2'>
+                                                <img src={meetings[0].imageUrl} alt="" className="w-32 grow-0 aspect-square rounded" />
+                                                <div className='grow flex flex-col justify-between'>
+                                                    <div className='flex flex-col gap-2'>
+                                                        <div className='flex flex-nowrap justify-between items-start'>
+                                                            <a
+                                                                href='https://www.yelp.com'
+                                                                target='_blank'
+                                                                className='font-semibold text-xl text-teal-600 hover:underline'
+                                                            >
+                                                                Business Name
+                                                            </a>
+                                                            <div className="whitespace-nowrap rounded-full mt-1 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                                                Rating ★ | 562
+                                                            </div>
+                                                        </div>
+                                                        <div className='flex flex-nowrap justify-between items-start'>
+                                                            <p className='text-sm text-gray-900'>
+                                                                Category | Food | Something | Other
+                                                            </p>
+                                                            <p className='text-xs text-gray-900 font-semibold'>
+                                                                $$$
+                                                            </p>
                                                         </div>
                                                     </div>
-                                                    <div className='flex flex-nowrap justify-between items-start'>
-                                                        <p className='text-xs text-gray-900'>
-                                                            Category | Food | Something | Other
-                                                        </p>
-                                                        <p className='text-xs text-gray-900 font-semibold'>
-                                                            $$$
+                                                    <div className='flex items-start gap-2'>
+                                                        <ChatBubbleLeftIcon x='0px' y='0px' className='w-8 h-4 mt-1' />
+                                                        <p className='inline-flex items-start h-[40px] text-sm text-gray-500 italic text-ellipsis'>
+                                                            "This is my review of this business.
+                                                            This is my review of this business.
+                                                            This is my review of this business.
+                                                            This is my review of this business."
                                                         </p>
                                                     </div>
                                                 </div>

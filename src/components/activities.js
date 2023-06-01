@@ -93,6 +93,7 @@ export default function Activities({ tripInfo }) {
             })
             const data = await response.json()
             setSavedList(data)
+            console.log(data);
 
         } catch (err) {
             console.log(err);

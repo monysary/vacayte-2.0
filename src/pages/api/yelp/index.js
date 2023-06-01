@@ -8,27 +8,41 @@ export const config = {
 
 export default async function handler(req, res) {
     authMiddleware(req, res, async () => {
-        if (req.method === 'GET') {
-            try {
-                const location = req.query.location.split(' ').join('%20')
-                const response = await fetch(`${process.env.YELP_ENDPOINT_LOCATION}${location}${process.env.YELP_TERM}${req.query.term}`,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${process.env.YELP_APIKEY}`
-                        },
+        switch (req.method) {
+            case 'GET':
+                try {
+                    const location = req.query.location.split(' ').join('%20')
+                    const response = await fetch(`${process.env.YELP_ENDPOINT_LOCATION}${location}${process.env.YELP_TERM}${req.query.term}`,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${process.env.YELP_APIKEY}`
+                            },
 
-                    }
-                )
-                const data = await response.json()
+                        }
+                    )
+                    const data = await response.json()
 
-                res.status(200).json(data)
-            } catch (err) {
-                console.log(err);
-                res.status(500).json({ message: 'Internal Server Error' })
-            }
-        } else {
-            res.status(400).json({ message: 'Invalid request' })
+                    res.status(200).json(data)
+                } catch (err) {
+                    console.log(err);
+                    res.status(500).json({ message: 'Internal Server Error' })
+                }
+                break;
+
+            case 'POST':
+                try {
+                    
+                } catch (err) {
+                    console.log(err);
+                    res.status(500).json({ message: 'Internal Server Error' })
+
+                }
+                break;
+
+            default:
+                res.status(400).json({ message: 'Invalid request' })
+                break;
         }
     })
 }
